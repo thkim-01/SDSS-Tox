@@ -1,0 +1,17 @@
+pandas
+numpy
+scikit-learn
+rdkit
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+shap>=0.42.0
+
+# PyTorch Migration (Phase 1)
+torch>=2.1.0
+torch-geometric>=2.4.0
+torch-scatter>=2.3.0
+torch-sparse>=0.6.17
+opencv-python>=4.8.0
+onnxruntime>=1.16.0

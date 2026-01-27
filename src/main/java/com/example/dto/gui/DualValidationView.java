@@ -1,0 +1,205 @@
+package com.example.dto.gui;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.scene.web.WebView;
+import javafx.util.Duration;
+
+public class DualValidationView {
+
+    @FXML private ComboBox<String> drugSearchBox;
+    @FXML private Button analyzeButton;
+    @FXML private WebView structureWebView;
+    @FXML private Label smilesLabel;
+    
+    @FXML private ProgressBar mlScoreBar;
+    @FXML private Label mlScoreLabel;
+    @FXML private Label mlStatusLabel;
+    
+    @FXML private ImageView treeImageView;
+    @FXML private Label treePlaceholder;
+    @FXML private Label verifiedBadge;
+    @FXML private TextFlow insightTextFlow;
+    @FXML private Label statusLabel;
+    
+    // Hardcoded demo data for "Smart Search"
+    private final Map<String, String> drugDatabase = new HashMap<>();
+
+    @FXML
+    public void initialize() {
+        // Initialize Demo Database
+        drugDatabase.put("Rofecoxib", "CC1=CC(=C(C(=C1)C)C)C2=C(C=C(C=C2)S(=O)(=O)N)O");
+        drugDatabase.put("Etoricoxib", "CS(=O)(=O)CC1=CC=C(C=C1)C2=C(C(=NO2)C3=CC=CC=C3Cl)C4=CC=C(C=C4)F");
+        drugDatabase.put("Aspirin", "CC(=O)OC1=CC=CC=C1C(=O)O");
+        drugDatabase.put("Celecoxib", "Cc1ccc(cc1)n2nc(cc2c3ccc(cc3)S(N)(=O)=O)C(F)(F)F");
+        drugDatabase.put("BACE1 Inhibitor", "CC(C)CC(C(=O)NC1CC1)NC(=O)C(CC2=CC=CC=C2)CC(O)C(CC3=CC=CC=C3)NC(=O)C(C)(C)S(=O)(=O)C");
+
+        // Setup Auto-complete behavior
+        drugSearchBox.getItems().addAll(drugDatabase.keySet());
+        drugSearchBox.getEditor().textProperty().addListener((obs, oldText, newText) -> {
+            Platform.runLater(() -> {
+                if (drugDatabase.containsKey(newText)) {
+                    smilesLabel.setText(drugDatabase.get(newText));
+                    loadStructureImage(newText); // Load 2D structure
+                }
+            });
+        });
+        
+        // Initial State
+        resetUI();
+    }
+    
+    private void resetUI() {
+        mlScoreBar.setProgress(0);
+        mlScoreLabel.setText("0%");
+        mlStatusLabel.setText("Waiting for input...");
+        treeImageView.setImage(null);
+        treePlaceholder.setVisible(true);
+        verifiedBadge.setVisible(false);
+        insightTextFlow.getChildren().clear();
+    }
+
+    private void loadStructureImage(String drugName) {
+        // Use PubChem PUG REST API for 2D structure
+        String subUrl = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/" + drugName + "/PNG";
+        // Simple HTML to center the image
+        String html = "<html><body style='margin:0;padding:0;display:flex;justify-content:center;align-items:center;height:100%;'>" +
+                      "<img src='" + subUrl + "' style='max-width:100%;max-height:100%;' /></body></html>";
+        structureWebView.getEngine().loadContent(html);
+    }
+
+    @FXML
+    private void onAnalyze() {
+        String drugName = drugSearchBox.getEditor().getText();
+        String smiles = drugDatabase.getOrDefault(drugName, smilesLabel.getText());
+        
+        if (smiles == null || smiles.isEmpty()) {
+            statusLabel.setText("Please select or type a valid drug/SMILES.");
+            return;
+        }
+        
+        resetUI();
+        statusLabel.setText("Analyzing " + drugName + "...");
+        analyzeButton.setDisable(true);
+        
+        // Background Task for Analysis
+        Task<Void> analysisTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                // 1. Simulate API delay -> ML Prediction
+                updateMessage("Querying PubChem & ML Models...");
+                Thread.sleep(1000); 
+                
+                // Mock ML Result
+                double toxicityScore = 0.92; // High risk for demo
+                
+                Platform.runLater(() -> {
+                    animateMLScore(toxicityScore);
+                    mlStatusLabel.setText("DTO Validation Pending...");
+                });
+                
+                // 2. Simulate Semantic Analysis (Tree Generation)
+                updateMessage("Building Semantic Decision Tree...");
+                
+                // Call Python script to generate image (Normally done via ProcessBuilder)
+                // Here we assume the batch script or a specific script generated 'bbbp_tree.png' or similar
+                // For demo, we might look for a specific file or a generic one.
+                // NOTE: We will try to find the image generated by run_batch_analysis.py if available,
+                // otherwise fallback or error.
+                
+                Thread.sleep(1500); // Simulate processing time
+                
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                statusLabel.setText("Analysis Complete.");
+                analyzeButton.setDisable(false);
+                
+                // Load Tree Image (Assuming it was generated in project root or results folder)
+                // Using a known file for demo purposes. In real app, name is dynamic.
+                // Let's assume we generated 'BBBP_Semantic_Map.png' in the previous step interactively
+                File imgFile = new File("BBBP_Semantic_Map.png");
+                if (!imgFile.exists()) {
+                     // Try results folder
+                     imgFile = new File("results/bbbp/bbbp_tree.png");
+                }
+                
+                if (imgFile.exists()) {
+                    Image image = new Image(imgFile.toURI().toString());
+                    treeImageView.setImage(image);
+                    treePlaceholder.setVisible(false);
+                    verifiedBadge.setVisible(true);
+                    
+                    // Typewriter Animation for Insight
+                    String insight = "System Insight: High Cardiovascular Risk predicted (92%).\n" +
+                                     "Reasoning: This molecule acts on [Enzyme] -> [COX-2], which is historically associated with thromboembolic events.\n" +
+                                     "Status: ML Prediction is supported by Semantic Logic (Consistent).";
+                    animateText(insight);
+                } else {
+                    statusLabel.setText("Tree image not found. Please run batch analysis first.");
+                }
+            }
+            
+            @Override
+            protected void failed() {
+                statusLabel.setText("Analysis Failed.");
+                analyzeButton.setDisable(false);
+            }
+        };
+        
+        statusLabel.textProperty().bind(analysisTask.messageProperty());
+        new Thread(analysisTask).start();
+    }
+    
+    // Animation 1: Gauge/Bar fill
+    private void animateMLScore(double targetScore) {
+        Timeline timeline = new Timeline();
+        for (int i = 0; i <= 100; i++) {
+            double keyTime = i * (1000.0 / 100);
+            double progress = (targetScore * i) / 100.0;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(keyTime), e -> {
+                mlScoreBar.setProgress(progress);
+                mlScoreLabel.setText(String.format("%.0f%%", progress * 100));
+                
+                // Change color based on score
+                String color = progress > 0.7 ? "#e74c3c" : (progress > 0.4 ? "#f39c12" : "#27ae60");
+                mlScoreBar.setStyle("-fx-accent: " + color + ";");
+            }));
+        }
+        timeline.play();
+    }
+    
+    // Animation 2: Typewriter Text
+    private void animateText(String content) {
+        insightTextFlow.getChildren().clear();
+        Text textNode = new Text("");
+        textNode.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;");
+        insightTextFlow.getChildren().add(textNode);
+        
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < content.length(); i++) {
+            final int index = i;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 30), e -> {
+                textNode.setText(content.substring(0, index + 1));
+            }));
+        }
+        timeline.play();
+    }
+}

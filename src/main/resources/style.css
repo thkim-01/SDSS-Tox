@@ -1,0 +1,260 @@
+/* Clean White/Gray Theme for In Silico DSS */
+
+.main-container {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Header */
+.header {
+    -fx-background-color: linear-gradient(to right, #ffffff, #f0f0f0);
+    -fx-padding: 8 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.app-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.stats-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* Tabs */
+.main-tabs {
+    -fx-background-color: transparent;
+}
+
+.main-tabs .tab-header-area {
+    -fx-background-color: #ffffff;
+}
+
+.main-tabs .tab {
+    -fx-background-color: #ecf0f1;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 10 20;
+}
+
+.main-tabs .tab:selected {
+    -fx-background-color: #3498db;
+}
+
+.main-tabs .tab .tab-label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.main-tabs .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-content {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+}
+
+/* Form Elements */
+.field-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.search-field,
+.smiles-input {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2c3e50;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+.search-field:focused,
+.smiles-input:focused {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 10, 0, 0, 0);
+}
+
+/* Buttons */
+.primary-button {
+    -fx-background-color: linear-gradient(to bottom, #3498db, #2980b9);
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #5dade2, #3498db);
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 15, 0, 0, 0);
+}
+
+.primary-button:pressed {
+    -fx-background-color: #2980b9;
+}
+
+/* Warning Button (for XAI alerts) */
+.warning-button {
+    -fx-background-color: linear-gradient(to bottom, #e74c3c, #c0392b);
+    -fx-text-fill: white;
+}
+
+.success-button {
+    -fx-background-color: linear-gradient(to bottom, #27ae60, #229954);
+    -fx-text-fill: white;
+}
+
+/* Tables */
+.result-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.result-table .column-header {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}
+
+.result-table .table-row-cell {
+    -fx-background-color: #ffffff;
+}
+
+.result-table .table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.result-table .table-row-cell:selected {
+    -fx-background-color: #3498db;
+}
+
+.result-table .table-cell {
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 4;
+    -fx-font-size: 12px;
+}
+
+.result-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
+
+.result-table .placeholder .label {
+    -fx-text-fill: #95a5a6;
+}
+
+/* XAI Alert Styles */
+.xai-match {
+    -fx-background-color: #d5f4e6;
+    -fx-border-color: #27ae60;
+}
+
+.xai-mismatch {
+    -fx-background-color: #fadbd8;
+    -fx-border-color: #e74c3c;
+}
+
+.xai-warning {
+    -fx-background-color: #fef9e7;
+    -fx-border-color: #f39c12;
+}
+
+/* Status Bar */
+.status-bar {
+    -fx-background-color: #ecf0f1;
+    -fx-padding: 10 20;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 0 0 0;
+}
+
+.status-text {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 12px;
+}
+
+.progress-bar {
+    -fx-accent: #3498db;
+}
+
+.progress-bar .track {
+    -fx-background-color: #e0e0e0;
+}
+
+/* About Tab */
+.about-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.about-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.about-version {
+    -fx-font-size: 14px;
+    -fx-text-fill: #95a5a6;
+}
+
+.about-info {
+    -fx-padding: 20;
+}
+
+.about-info .label {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 14px;
+}
+
+/* Scrollbars */
+.scroll-bar {
+    -fx-background-color: #f5f5f5;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+}
+
+/* Explanation Panel */
+.explanation-panel {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #3498db;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 15;
+}
+
+.explanation-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.explanation-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #7f8c8d;
+}

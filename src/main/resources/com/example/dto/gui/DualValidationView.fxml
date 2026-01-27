@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dto.gui.DualValidationView">
+    <top>
+        <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: #f8f9fa;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Neuro-Symbolic DTO-DSS" />
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Search Drug:" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="drugSearchBox" editable="true" prefWidth="300.0" promptText="Type drug name (e.g., Rofecoxib)..." />
+                <Button fx:id="analyzeButton" onAction="#onAnalyze" text="Analyze" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" />
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <SplitPane dividerPositions="0.4" style="-fx-background-color: transparent;">
+            <!-- Left: Input & ML Prediction -->
+            <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: white;">
+                <Label text="1. ML Prediction (Probability)" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #34495e;" />
+                
+                <VBox spacing="5" style="-fx-padding: 10; -fx-border-color: #ecf0f1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-background-color: #fdfdfd;">
+                    <Label text="Structure Preview" style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;" />
+                    <WebView fx:id="structureWebView" prefHeight="200.0" prefWidth="300.0" />
+                    <Label fx:id="smilesLabel" wrapText="true" style="-fx-font-family: 'Consolas'; -fx-text-fill: #95a5a6; -fx-font-size: 11px;" />
+                </VBox>
+                
+                <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20; -fx-border-color: #ecf0f1; -fx-border-radius: 10;">
+                    <Label text="Toxicity Score" style="-fx-font-size: 14px;" />
+                    <StackPane>
+                         <ProgressBar fx:id="mlScoreBar" prefWidth="300.0" progress="0.0" style="-fx-accent: #e74c3c; -fx-control-inner-background: #ecf0f1;" />
+                         <Label fx:id="mlScoreLabel" text="0%" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-effect: dropshadow(one-pass-box, black, 2, 0.5, 0, 0);" />
+                    </StackPane>
+                    <Label fx:id="mlStatusLabel" text="Waiting for input..." style="-fx-text-fill: #7f8c8d; -fx-font-style: italic;" />
+                </VBox>
+                
+                 <VBox spacing="5" style="-fx-background-color: #fff3cd; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="⚠️ AI Uncertainty" style="-fx-font-weight: bold; -fx-text-fill: #856404;" />
+                    <Label text="Neural networks can be overconfident. Semantic validation is required." wrapText="true" style="-fx-text-fill: #856404;" />
+                 </VBox>
+            </VBox>
+            
+            <!-- Right: Semantic Validation -->
+            <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: white;">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="2. Semantic Validation (Logic)" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #27ae60;" />
+                    <Label text="VERIFIED" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 3 8; -fx-background-radius: 10; -fx-font-size: 10px; -fx-font-weight: bold;" visible="false" fx:id="verifiedBadge"/>
+                </HBox>
+                
+                <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <content>
+                        <StackPane style="-fx-background-color: #f8f9fa;">
+                            <ImageView fx:id="treeImageView" preserveRatio="true" />
+                            <Label fx:id="treePlaceholder" text="Semantic Tree will appear here..." textFill="#bdc3c7" />
+                        </StackPane>
+                    </content>
+                </ScrollPane>
+                
+                <VBox spacing="10" style="-fx-border-color: #27ae60; -fx-border-width: 0 0 0 4; -fx-padding: 10; -fx-background-color: #f0fff4;">
+                    <Label text="System Insight" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;" />
+                    <TextFlow fx:id="insightTextFlow" />
+                </VBox>
+            </VBox>
+        </SplitPane>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10; -fx-background-color: #ecf0f1;">
+            <Label fx:id="statusLabel" text="System Ready" textFill="#7f8c8d" />
+        </HBox>
+    </bottom>
+</BorderPane>

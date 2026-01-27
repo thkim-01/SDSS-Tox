@@ -1,0 +1,210 @@
+# DTO-DSS Ontology Rules Configuration
+# 이 파일에서 온톨로지 규칙을 정의하고 관리합니다
+# 규칙을 추가/수정하면 시스템이 자동으로 반영합니다
+
+version: "1.0"
+description: "Drug Toxicity Ontology Rules for ML+Ontology Combined Prediction"
+
+# 규칙 카테고리 정의
+categories:
+  structural:
+    name: "구조적 특성"
+    description: "분자 구조 기반 규칙"
+  adme:
+    name: "ADME 특성"
+    description: "흡수, 분포, 대사, 배설 관련"
+  toxicity:
+    name: "독성 패턴"
+    description: "알려진 독성 구조 패턴"
+  lipinski:
+    name: "Lipinski 규칙"
+    description: "약물 유사성 규칙"
+
+# 온톨로지 규칙 정의
+rules:
+  # 구조적 특성 규칙
+  - id: HIGH_LOGP
+    category: structural
+    name: "높은 지질친화도"
+    condition:
+      type: threshold
+      descriptor: logp
+      operator: ">"
+      value: 3.0
+    weight: 0.30
+    toxicity_direction: positive  # 독성 증가 방향
+    interpretation: "LogP > 3.0: 높은 지질친화성으로 세포막 투과 증가, 약물 축적 및 독성 위험"
+    reference: "Lipinski Rule of Five"
+
+  - id: HIGH_MW
+    category: structural
+    name: "높은 분자량"
+    condition:
+      type: threshold
+      descriptor: molecular_weight
+      operator: ">"
+      value: 500
+    weight: 0.15
+    toxicity_direction: positive
+    interpretation: "MW > 500: 대형 분자는 생체이용률 저하 및 대사 복잡성 증가"
+    reference: "Lipinski Rule of Five"
+
+  - id: AROMATIC_RINGS
+    category: structural
+    name: "다중 방향족 고리"
+    condition:
+      type: threshold
+      descriptor: num_aromatic_rings
+      operator: ">="
+      value: 3
+    weight: 0.20
+    toxicity_direction: positive
+    interpretation: "방향족 고리 ≥ 3개: 대사 복잡성 및 반응성 대사체 형성 위험"
+    reference: "Structural Alerts for Toxicity"
+
+  - id: EXCESSIVE_ROTATABLE
+    category: structural
+    name: "과다 회전 가능 결합"
+    condition:
+      type: threshold
+      descriptor: num_rotatable_bonds
+      operator: ">"
+      value: 10
+    weight: 0.10
+    toxicity_direction: positive
+    interpretation: "회전 가능 결합 > 10: 생체이용률 저하, 경구 흡수 감소"
+    reference: "Veber Rules"
+
+  # ADME 관련 규칙
+  - id: LOW_TPSA
+    category: adme
+    name: "낮은 극성 표면적"
+    condition:
+      type: threshold
+      descriptor: tpsa
+      operator: "<"
+      value: 40
+    weight: 0.12
+    toxicity_direction: positive
+    interpretation: "TPSA < 40: 높은 막투과성, 잠재적 중추신경계 독성"
+    reference: "BBB Penetration Rules"
+
+  - id: HIGH_TPSA
+    category: adme
+    name: "높은 극성 표면적"
+    condition:
+      type: threshold
+      descriptor: tpsa
+      operator: ">"
+      value: 140
+    weight: 0.08
+    toxicity_direction: negative
+    interpretation: "TPSA > 140: 낮은 세포막 투과성, 일반적으로 낮은 독성"
+    reference: "Polar Surface Area Rules"
+
+  - id: EXCESSIVE_HBD
+    category: adme
+    name: "과다 수소결합 공여체"
+    condition:
+      type: threshold
+      descriptor: num_h_donors
+      operator: ">"
+      value: 5
+    weight: 0.08
+    toxicity_direction: positive
+    interpretation: "HBD > 5: 경구 흡수 저하, 투과성 문제"
+    reference: "Lipinski Rule of Five"
+
+  - id: EXCESSIVE_HBA
+    category: adme
+    name: "과다 수소결합 수용체"
+    condition:
+      type: threshold
+      descriptor: num_h_acceptors
+      operator: ">"
+      value: 10
+    weight: 0.08
+    toxicity_direction: positive
+    interpretation: "HBA > 10: 용해도 문제, 막 투과성 감소"
+    reference: "Lipinski Rule of Five"
+
+  # Lipinski Rule of Five 종합
+  - id: LIPINSKI_VIOLATION
+    category: lipinski
+    name: "Lipinski 위반"
+    condition:
+      type: composite
+      logic: "count_violations >= 2"
+      sub_conditions:
+        - descriptor: molecular_weight
+          operator: ">"
+          value: 500
+        - descriptor: logp
+          operator: ">"
+          value: 5
+        - descriptor: num_h_donors
+          operator: ">"
+          value: 5
+        - descriptor: num_h_acceptors
+          operator: ">"
+          value: 10
+    weight: 0.25
+    toxicity_direction: positive
+    interpretation: "2개 이상 Lipinski 위반: 약물 유사성 낮음, 개발 위험 증가"
+    reference: "Lipinski CA et al., Adv Drug Deliv Rev 1997"
+
+  # 독성 패턴 규칙
+  - id: HEAVY_ATOMS_HIGH
+    category: toxicity
+    name: "다수 무거운 원자"
+    condition:
+      type: threshold
+      descriptor: num_heavy_atoms
+      operator: ">"
+      value: 35
+    weight: 0.10
+    toxicity_direction: positive
+    interpretation: "무거운 원자 > 35개: 복잡한 분자, 대사 예측 어려움"
+    reference: "Molecular Complexity"
+
+  - id: LOW_FSP3
+    category: toxicity
+    name: "낮은 sp3 탄소 비율"
+    condition:
+      type: threshold
+      descriptor: fraction_csp3
+      operator: "<"
+      value: 0.25
+    weight: 0.12
+    toxicity_direction: positive
+    interpretation: "Fsp3 < 0.25: 평면 구조, 잠재적 독성 증가"
+    reference: "Lovering F, MedChemComm 2013"
+
+# 가중치 조정 설정
+weight_normalization: true
+total_weight: 1.0
+
+# 시각화 색상 설정 (WCAG AA 준수)
+colors:
+  positive: "#FF6B6B"  # 빨강 - 독성 증가
+  negative: "#4ECDC4"  # 청록 - 독성 감소  
+  neutral: "#95A5A6"   # 회색 - 중립
+  highlight: "#2ECC71" # 녹색 - 선택됨
+
+# 신뢰도 레벨 설정
+confidence_levels:
+  high:
+    range: [0.67, 1.0]
+    label: "높음"
+    color: "#27AE60"
+    action: "예측 신뢰 가능"
+  medium:
+    range: [0.34, 0.66]
+    label: "중간"
+    color: "#F39C12"
+    action: "추가 검증 권장"
+  low:
+    range: [0.0, 0.33]
+    label: "낮음"
+    color: "#E74C3C"
+    action: "수동 검토 필수"

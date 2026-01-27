@@ -1,0 +1,103 @@
+Summary Report for muv
+========================================
+ [Root] Root
+  └─ [Family] Unknown Family
+    └─ [Class] Unknown Class
+      └─ [Leaf] BDBM56962
+          => Inference: Acts on BDBM56962 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Z18500118
+          => Inference: Acts on Z18500118 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM50816
+          => Inference: Acts on BDBM50816 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK582663
+          => Inference: Acts on STK582663 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] AAA94945
+          => Inference: Acts on AAA94945 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM32076
+          => Inference: Acts on BDBM32076 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Unknown
+          => Inference: Acts on Unknown (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK189873
+          => Inference: Acts on STK189873 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Z85919495
+          => Inference: Acts on Z85919495 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM56961
+          => Inference: Acts on BDBM56961 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] DB-268573
+          => Inference: Acts on DB-268573 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] HMS2445H22
+          => Inference: Acts on HMS2445H22 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK114275
+          => Inference: Acts on STK114275 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] ST065966
+          => Inference: Acts on ST065966 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Q27193283
+          => Inference: Acts on Q27193283 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] CCG-16728
+          => Inference: Acts on CCG-16728 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM64875
+          => Inference: Acts on BDBM64875 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] ST050972
+          => Inference: Acts on ST050972 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK830030
+          => Inference: Acts on STK830030 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] HMS1689E01
+          => Inference: Acts on HMS1689E01 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] HMS2430I10
+          => Inference: Acts on HMS2430I10 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] CCG-28442
+          => Inference: Acts on CCG-28442 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] HMS2540D06
+          => Inference: Acts on HMS2540D06 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK152868
+          => Inference: Acts on STK152868 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM41524
+          => Inference: Acts on BDBM41524 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM33457
+          => Inference: Acts on BDBM33457 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] HMS2289H08
+          => Inference: Acts on HMS2289H08 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK189900
+          => Inference: Acts on STK189900 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] MS-6076
+          => Inference: Acts on MS-6076 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] 644-291-8
+          => Inference: Acts on 644-291-8 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Q27187466
+          => Inference: Acts on Q27187466 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] ST090794
+          => Inference: Acts on ST090794 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STL577312
+          => Inference: Acts on STL577312 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] 633-521-2
+          => Inference: Acts on 633-521-2 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM53681
+          => Inference: Acts on BDBM53681 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK114339
+          => Inference: Acts on STK114339 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] CCG-5608
+          => Inference: Acts on CCG-5608 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK210755
+          => Inference: Acts on STK210755 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] ST093902
+          => Inference: Acts on ST093902 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STL343478
+          => Inference: Acts on STL343478 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM76910
+          => Inference: Acts on BDBM76910 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Z18546805
+          => Inference: Acts on Z18546805 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM53682
+          => Inference: Acts on BDBM53682 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM51520
+          => Inference: Acts on BDBM51520 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] STK483464
+          => Inference: Acts on STK483464 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM39770
+          => Inference: Acts on BDBM39770 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] Q27188424
+          => Inference: Acts on Q27188424 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] BDBM38757
+          => Inference: Acts on BDBM38757 (Unknown Family). Unknown Disease related, BBBP: Fail.
+      └─ [Leaf] PAS
+          => Inference: Acts on PAS (Unknown Family). Unknown Disease related, BBBP: Fail.
