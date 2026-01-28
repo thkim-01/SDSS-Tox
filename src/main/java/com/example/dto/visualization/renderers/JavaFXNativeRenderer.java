@@ -17,11 +17,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.geometry.Insets;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class JavaFXNativeRenderer implements VisualizationRenderer {
 
     @Override
     public Node createFeatureImportance(Map<String, Object> data) {
-        if (data == null || !data.containsKey("features") || !data.containsKey("importance")) {
+        if (data == null || !data.containsKey("features") 
+            || !data.containsKey("importance")) {
             return new Label("No feature importance data available.");
         }
 

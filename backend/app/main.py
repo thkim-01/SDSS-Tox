@@ -32,13 +32,13 @@ RDKIT_AVAILABLE = RDKIT_CORE_AVAILABLE
 
 # Service Imports
 from app.services.model_manager import get_model_manager
-from app.services.shap_explainer import SHAPExplainer
-from app.services.dto_rule_engine import DTORuleEngine
+from app.services.explainability.shap_explainer import SHAPExplainer
+from app.services.ontology.dto_rule_engine import DTORuleEngine
 from app.services.simple_qsar import SimpleQSAR
-from app.services.read_across import ReadAcross
-from app.services.ensemble_dss import EnsembleDSS
-from app.services.combined_predictor import CombinedPredictor
-from app.services.dataset_loader import DatasetLoader
+from app.services.ontology.read_across import ReadAcross
+from app.services.predictors.ensemble_dss import EnsembleDSS
+from app.services.predictors.combined_predictor import CombinedPredictor
+from app.services.data.dataset_loader import DatasetLoader
 
 # 로깅 설정
 logging.basicConfig(
@@ -184,9 +184,9 @@ async def lifespan(app: FastAPI):
         model_manager = get_model_manager()
         
         # 1. Register Core Models
-        from app.services.rf_predictor import RFPredictor
-        from app.services.dt_predictor import DecisionTreePredictor
-        from app.services.sdt_predictor import SDTPredictor
+        from app.services.predictors.rf_predictor import RFPredictor
+        from app.services.predictors.dt_predictor import DecisionTreePredictor
+        from app.services.predictors.sdt_predictor import SDTPredictor
         
         model_manager.register_model_type("random_forest", RFPredictor)
         model_manager.register_model_type("decision_tree", DecisionTreePredictor)

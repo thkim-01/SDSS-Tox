@@ -36,6 +36,7 @@ import javafx.stage.Stage;
  * - 산점도 (X: 선택한 분자 기술자, Y: 독성 확률)
  * - 점 클릭 시 SMILES 이미지 + 분자 속성 테이블 표시
  */
+@SuppressWarnings({"unchecked", "unused"})
 public class BatchPlotController implements Initializable {
 
     @FXML private ComboBox<String> descriptorCombo;

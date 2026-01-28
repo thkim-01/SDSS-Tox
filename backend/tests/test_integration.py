@@ -1,4 +1,4 @@
-"""DTO-DSS 통합 테스트.
+"""SDSS-Tox 통합 테스트.
 
 Phase 6.1: 전체 시스템 통합 테스트
 - FastAPI 엔드포인트 테스트

@@ -39,7 +39,7 @@ public class DebugLauncher extends Application {
                 scene.getStylesheets().add(cssResource.toExternalForm());
             }
             
-            primaryStage.setTitle("DTO-DSS Debug");
+            primaryStage.setTitle("SDSS-Tox Debug");
             primaryStage.setScene(scene);
             primaryStage.show();
             

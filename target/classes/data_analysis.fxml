@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.example.dto.gui.DataAnalysisController" styleClass="main-container">
+    
+    <top>
+        <VBox styleClass="header" spacing="10">
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label text="Data Analysis Tool" styleClass="app-title" style="-fx-font-size: 18px;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="datasetLabel" text="Dataset: None" styleClass="stats-label"/>
+            </HBox>
+            
+            <!-- Controls -->
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-background-radius: 5;">
+                <Label text="X-Axis:" styleClass="field-label"/>
+                <ComboBox fx:id="xAxisCombo" prefWidth="120" promptText="Select X"/>
+                
+                <Label text="Y-Axis:" styleClass="field-label"/>
+                <ComboBox fx:id="yAxisCombo" prefWidth="120" promptText="Select Y"/>
+                
+                <Label text="Color:" styleClass="field-label"/>
+                <ComboBox fx:id="colorCombo" prefWidth="120" promptText="Select Color"/>
+                
+                <Separator orientation="VERTICAL"/>
+                
+                <CheckBox fx:id="logXCheck" text="Log X"/>
+                <CheckBox fx:id="logYCheck" text="Log Y"/>
+                
+                <Separator orientation="VERTICAL"/>
+                
+                <CheckBox fx:id="linearRegCheck" text="Linear Reg" style="-fx-text-fill: #3498db;"/>
+                <CheckBox fx:id="ransacCheck" text="RANSAC" style="-fx-text-fill: #e74c3c;"/>
+                
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Update Plot" onAction="#onUpdatePlot" styleClass="primary-button"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <WebView fx:id="plotWebView" VBox.vgrow="ALWAYS" minHeight="400"/>
+        </VBox>
+    </center>
+    
+</BorderPane>

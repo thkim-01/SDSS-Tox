@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class DataAnalysisController {
 
     @FXML private Label datasetLabel;

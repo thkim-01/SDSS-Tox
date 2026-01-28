@@ -187,7 +187,7 @@ public class NeuroSymbolicController {
         });
 
         nsDataGridTable.setItems(parameterData);
-        TableUtils.installCopyPasteHandler(nsDataGridTable);
+        // Copy/Paste support temporarily disabled (TableUtils not available)
         
         // Simulation Setup
         nsTargetSimulatorBox.getItems().addAll("COX-2 (ORIGINAL)", "EGFR (KINASE)", "BACE1 (ENZYME)", "NONE (SAFE)");

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.example.dto.gui.MainController" styleClass="main-container">
+    
+    <!-- Top: Header -->
+    <top>
+        <VBox styleClass="header">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="In Silico DSS" styleClass="app-title"/>
+                <Label text="- Explainable AI Decision Support" style="-fx-text-fill: #7f8c8d; -fx-font-size: 14px;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="ontologyBrowserBtn" text="Ontology Browser" onAction="#onOpenOntologyBrowser" 
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                <Label fx:id="statsLabel" text="Loading..." styleClass="stats-label"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <!-- Center: Main Content - Tabs (Integrated XAI View + QSAR Toolbox) -->
+    <center>
+        <TabPane>
+            <tabs>
+                <Tab text="Integrated Analysis">
+                    <content>
+                        <VBox spacing="15" styleClass="tab-content">
+                            <!-- ...existing integrated content... -->
+                            <HBox spacing="20">
+                                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                    <Label text="Enter SMILES" styleClass="field-label"/>
+                                    <TextArea fx:id="smilesInput" promptText="Enter molecule SMILES (one per line)" 
+                                              prefRowCount="4" styleClass="smiles-input"/>
+                                </VBox>
+                                <VBox spacing="10" alignment="CENTER">
+                                    <Button fx:id="analyzeButton" text="Run Analysis" onAction="#onAnalyze" 
+                                            styleClass="primary-button" prefWidth="150" prefHeight="60"/>
+                                    <Label text="ML Prediction + Ontology Check" style="-fx-text-fill: #95a5a6; -fx-font-size: 11px;"/>
+                                </VBox>
+                            </HBox>
+                            <Separator/>
+                            <HBox spacing="15" VBox.vgrow="ALWAYS">
+                                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                    <Label text="Analysis Results" styleClass="field-label"/>
+                                    <TableView fx:id="resultTable" VBox.vgrow="ALWAYS" styleClass="result-table">
+                                        <columns>
+                                            <TableColumn fx:id="smilesColumn" text="SMILES" prefWidth="180"/>
+                                            <TableColumn fx:id="mlPredColumn" text="ML Pred" prefWidth="100"/>
+                                            <TableColumn fx:id="ontoPredColumn" text="Ontology" prefWidth="100"/>
+                                            <TableColumn fx:id="statusColumn" text="Match" prefWidth="100"/>
+                                        </columns>
+                                        <placeholder>
+                                            <Label text="Enter SMILES and click 'Run Analysis'"/>
+                                        </placeholder>
+                                    </TableView>
+                                </VBox>
+                                <VBox spacing="10" prefWidth="380" styleClass="explanation-panel">
+                                    <Label text="Analysis Report" styleClass="explanation-title"/>
+                                    <TextArea fx:id="explanationArea" editable="false" wrapText="true" 
+                                              prefHeight="200" styleClass="explanation-text"
+                                              promptText="Select a result to view detailed report."/>
+                                    <Separator/>
+                                    <Label text="Mapped Ontology Classes" styleClass="field-label"/>
+                                    <ListView fx:id="ontologyListView" VBox.vgrow="ALWAYS" prefHeight="150"/>
+                                    <HBox spacing="10">
+                                        <Label text="Detected Patterns:" style="-fx-font-weight: bold;"/>
+                                        <Label fx:id="patternsLabel" text="-" style="-fx-text-fill: #7f8c8d;"/>
+                                    </HBox>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="Simulation Control">
+                    <content>
+                        <fx:include source="NeuroSymbolicTab_v2.fxml"/>
+                    </content>
+                </Tab>
+                <Tab text="Benchmark Analysis">
+                    <content>
+                        <VBox spacing="15" styleClass="tab-content">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            
+                            <!-- Control Panel -->
+                            <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-background-radius: 5;">
+                                <VBox spacing="5">
+                                    <Label text="Select Dataset" styleClass="field-label"/>
+                                    <HBox spacing="5" alignment="CENTER_LEFT">
+                                        <ComboBox fx:id="datasetCombo" prefWidth="150" promptText="Select Dataset"/>
+                                        <Button fx:id="refreshDatasetsBtn" text="Refresh" onAction="#onRefreshDatasets" style="-fx-padding: 3 6 3 6;">
+                                            <tooltip>
+                                                <Tooltip text="Refresh Dataset List"/>
+                                            </tooltip>
+                                        </Button>
+                                    </HBox>
+                                </VBox>
+                                <VBox spacing="5">
+                                    <Label text="Sample Size" styleClass="field-label"/>
+                                    <ComboBox fx:id="sampleSizeCombo" prefWidth="100"/>
+                                </VBox>
+                                <VBox spacing="5">
+                                    <Label text="Analysis Model" styleClass="field-label"/>
+                                    <ComboBox fx:id="modelSelector" prefWidth="140" promptText="Select Model"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="runBenchmarkBtn" text="Run Batch Analysis" onAction="#onRunBenchmark" 
+                                        styleClass="primary-button" prefHeight="40"/>
+                            </HBox>
+                            
+                            <SplitPane dividerPositions="0.35" VBox.vgrow="ALWAYS">
+                                <!-- Left: Results Table -->
+                                <VBox spacing="10">
+                                    <Label text="Results List" styleClass="field-label"/>
+                                    <TableView fx:id="benchmarkTable" VBox.vgrow="ALWAYS">
+                                        <columns>
+                                            <TableColumn fx:id="benchNameCol" text="Name" prefWidth="100"/>
+                                            <TableColumn fx:id="benchSmilesCol" text="SMILES" prefWidth="100"/>
+                                            <TableColumn fx:id="benchMlCol" text="ML Pred" prefWidth="65"/>
+                                            <TableColumn fx:id="benchBinaryPredCol" text="Pred (0/1)" prefWidth="70"/>
+                                            <TableColumn fx:id="benchOntoCol" text="Ontology" prefWidth="65"/>
+                                            <TableColumn fx:id="benchCombinedCol" text="Combined" prefWidth="65"/>
+                                            <TableColumn fx:id="benchConfCol" text="Confidence" prefWidth="60"/>
+                                            <TableColumn fx:id="benchRiskCol" text="Risk" prefWidth="60"/>
+                                        </columns>
+                                        <columnResizePolicy>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        </columnResizePolicy>
+                                    </TableView>
+                                </VBox>
+                                
+                                <!-- Right: Regression Plot + Details -->
+                                <VBox spacing="10">
+                                    <!-- Regression Plot Section -->
+                                    <VBox styleClass="card-panel" VBox.vgrow="ALWAYS" spacing="10">
+                                        <HBox spacing="10" alignment="CENTER_LEFT">
+                                            <Label text="Plot" style="-fx-font-weight: bold;"/>
+                                            <Region HBox.hgrow="ALWAYS"/>
+                                        </HBox>
+                                        <StackPane fx:id="visualizationContainer" VBox.vgrow="ALWAYS">
+                                            <WebView fx:id="benchWebView" minHeight="200" prefHeight="-1.0" prefWidth="-1.0"/>
+                                        </StackPane>
+                                        
+                                        <!-- Dynamic Visualization Button Bar -->
+                                        <HBox fx:id="visualizationButtonContainer" spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 5;">
+                                            <!-- Buttons will be added dynamically based on selected model -->
+                                        </HBox>
+                                    </VBox>
+                                    
+                                    <!-- Confidence + Agreement Panel -->
+                                    <HBox spacing="15" styleClass="card-panel">
+                                        <VBox spacing="5">
+                                            <Label text="Confidence" style="-fx-font-weight: bold;"/>
+                                            <HBox spacing="8" alignment="CENTER_LEFT">
+                                                <ProgressBar fx:id="confidenceBar" prefWidth="100" progress="0.0"/>
+                                                <Label fx:id="confidenceLabel" text="-" style="-fx-font-weight: bold;"/>
+                                            </HBox>
+                                        </VBox>
+                                        <Separator orientation="VERTICAL"/>
+                                        <VBox spacing="5">
+                                            <Label text="Agreement" style="-fx-font-weight: bold;"/>
+                                            <Label fx:id="agreementLabel" text="-" style="-fx-font-size: 12px;"/>
+                                        </VBox>
+                                        <Separator orientation="VERTICAL"/>
+                                        <VBox spacing="5">
+                                            <Label text="Triggered Rules" style="-fx-font-weight: bold;"/>
+                                            <Label fx:id="triggeredRulesCountLabel" text="0" style="-fx-font-size: 12px;"/>
+                                        </VBox>
+                                    </HBox>
+                                    
+                                    <!-- Ontology Rules Detail Panel (Why Explanation) -->
+                                    <VBox styleClass="card-panel" spacing="5" VBox.vgrow="SOMETIMES">
+                                        <Label text="Ontology Rules Detail (Why?)" style="-fx-font-weight: bold;"/>
+                                        <ListView fx:id="triggeredRulesListView" prefHeight="120"/>
+                                    </VBox>
+                                </VBox>
+                            </SplitPane>
+                        </VBox>
+                    </content>
+                </Tab>
+                <!-- Advanced Analysis Tab removed as per user request -->
+            </tabs>
+        </TabPane>
+    </center>
+    
+    <!-- Bottom: Status Bar -->
+    <bottom>
+        <HBox styleClass="status-bar" spacing="10" alignment="CENTER_LEFT">
+            <ProgressBar fx:id="progressBar" prefWidth="150"/>
+            <Label fx:id="statusLabel" text="Ready..." styleClass="status-text"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="DTO: Drug Target Ontology | ML: Tox21 Random Forest | SMILES Pattern Mapping" style="-fx-text-fill: #95a5a6; -fx-font-size: 11px;"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

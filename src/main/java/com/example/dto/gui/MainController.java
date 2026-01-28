@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.example.dto.ChemicalMapper;
-import com.example.dto.ChemicalMapper.MappingResult;
-import com.example.dto.DtoLoader;
-import com.example.dto.DtoQuery;
+import com.example.dto.core.ChemicalMapper;
+import com.example.dto.core.ChemicalMapper.MappingResult;
+import com.example.dto.core.DtoLoader;
+import com.example.dto.core.DtoQuery;
 import com.example.dto.api.DssApiClient;
 import com.example.dto.api.DssApiClient.CombinedPredictionResponse;
 import com.example.dto.api.DssApiClient.TriggeredRule;
@@ -45,6 +45,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
+@SuppressWarnings({"unchecked", "unused", "null"})
 public class MainController implements Initializable {
     
     @FXML private TextArea smilesInput;
@@ -160,9 +161,7 @@ public class MainController implements Initializable {
             }
         });
         
-        // Add Copy/Paste Support
-        TableUtils.installCopyPasteHandler(resultTable);
-        TableUtils.installCopyPasteHandler(benchmarkTable);
+        // Copy/Paste support temporarily disabled (TableUtils not available)
     }
     private void loadOntologyAsync() {
         statusLabel.setText("Loading Ontology...");
@@ -174,7 +173,7 @@ public class MainController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 dtoLoader = new DtoLoader();
-                dtoLoader.loadOntology("dto.rdf");
+                dtoLoader.loadOntology("data/ontology/dto.rdf");
                 dtoQuery = new DtoQuery(dtoLoader);
                 chemicalMapper = new ChemicalMapper(dtoLoader);
                 return null;

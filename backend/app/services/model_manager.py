@@ -1,9 +1,9 @@
 import logging
 from typing import Dict, Any, Optional, Type
 from .base_model import BaseModel
-from .rf_predictor import RFPredictor
-from .pytorch_predictor import PyTorchPredictor
-from .sdt_predictor import SDTPredictor
+from .predictors.rf_predictor import RFPredictor
+from .predictors.pytorch_predictor import PyTorchPredictor
+from .predictors.sdt_predictor import SDTPredictor
 
 logger = logging.getLogger(__name__)
 

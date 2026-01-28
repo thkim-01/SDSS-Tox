@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
-import com.example.dto.DtoLoader;
+import com.example.dto.core.DtoLoader;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 /**
  * Window for exploring ontology graph (classes and relationships).
  */
+@SuppressWarnings({"unchecked", "unused", "null"})
 public class OntologyGraphWindow extends Stage {
     private final DtoLoader loader;
     private TreeView<String> classTreeView;

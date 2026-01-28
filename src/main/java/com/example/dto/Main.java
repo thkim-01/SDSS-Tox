@@ -8,6 +8,8 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.example.dto.core.DtoLoader;
+import com.example.dto.core.DtoQuery;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +17,7 @@ public class Main {
         // Commands: stats, search, targets
         
         if (args.length < 2) {
-            System.err.println("Usage: java -jar dto-dss.jar <dto_path> <command> [query]");
+            System.err.println("Usage: java -jar sdss-tox.jar <dto_path> <command> [query]");
             System.err.println("Commands:");
             System.err.println("  stats - Show ontology statistics");
             System.err.println("  search <term> - Search classes by label");
