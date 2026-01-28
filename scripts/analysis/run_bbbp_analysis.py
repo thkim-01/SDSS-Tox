@@ -6,16 +6,16 @@ from backend.app.services.predictors.semantic_decision_tree import SemanticDecis
 from tqdm import tqdm
 
 def run_bbbp_analysis():
-    print(">>> [System] BBBP 데이터셋 로딩 중...")
+    print(">>> [System] BBBP   ...")
     bbbp_path = "data/bbbp/BBBP.csv"
     
     try:
         if os.path.exists(bbbp_path):
-            df = pd.read_csv(bbbp_path) # p_np: 1(통과), 0(차단)
+            df = pd.read_csv(bbbp_path) # p_np: 1(), 0()
         else:
             raise FileNotFoundError(f"{bbbp_path} not found")
     except Exception as e:
-        print(f">>> [Demo] {e}. 샘플 데이터로 진행합니다.")
+        print(f">>> [Demo] {e}.   .")
         df = pd.DataFrame({
             'smiles': [
                 'CC(=O)Oc1ccccc1C(=O)O', 
@@ -27,7 +27,7 @@ def run_bbbp_analysis():
             'name': ['Aspirin', 'Caffeine', 'Rofecoxib', 'EGFR-like']
         })
 
-    # 초기화
+    # 
     tree = SemanticDecisionTree()
     
     try:
@@ -38,9 +38,9 @@ def run_bbbp_analysis():
         
     dto_kb = DTOKnowledgeBase("../../data/ontology/dto.rdf")
     
-    print(f">>> [Process] 총 {len(df)}개 약물 분석 시작 (PubChem API 속도 고려, 상위 20개만 시연)...")
+    print(f">>> [Process]  {len(df)}    (PubChem API  ,  20 )...")
     
-    # 시간 관계상 상위 20개만 테스트 (전체 분석 시 슬라이싱 제거하세요)
+    #    20  (    )
     # df = df.head(20) 
     test_df = df.head(20)
     
@@ -58,19 +58,19 @@ def run_bbbp_analysis():
         # 2. Semantic Extraction
         info = dto_kb.get_semantic_info(target_name)
         
-        # 3. 데이터 추가 (통과 여부 정보도 트리에 저장)
+        # 3.   (    )
         info['BBBP_Result'] = "Pass" if is_permeable == 1 else "Fail"
         tree.insert(info)
 
-    print("\n>>> [Viz] 의미론적 트리 시각화 생성 중...")
+    print("\n>>> [Viz]     ...")
     
-    # 시각화 메서드 호출 (Graphviz가 설치되어 있어야 함)
+    #    (Graphviz   )
     try:
         tree.export_graphviz("BBBP_Semantic_Map") 
-        print(">>> [Success] 'BBBP_Semantic_Map.png' 파일이 생성되었습니다.")
+        print(">>> [Success] 'BBBP_Semantic_Map.png'  .")
     except Exception as e:
-        print(f">>> [Warning] 이미지 생성 실패 (Graphviz 미설치): {e}")
-        print(">>> 대신 텍스트 트리를 출력합니다.")
+        print(f">>> [Warning]    (Graphviz ): {e}")
+        print(">>>    .")
         tree.print_tree()
 
 if __name__ == "__main__":

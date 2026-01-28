@@ -1,105 +1,105 @@
 Summary Report for bbbp
 ========================================
  [Root] Root
-  └─ [Family] Unknown Family
-    └─ [Class] Unknown Class
-      └─ [Leaf] Kemi
+   [Family] Unknown Family
+     [Class] Unknown Class
+       [Leaf] Kemi
           => Inference: Acts on Kemi (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 119054-09-0
+       [Leaf] 119054-09-0
           => Inference: Acts on 119054-09-0 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] OFX
+       [Leaf] OFX
           => Inference: Acts on OFX (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] G87828
+       [Leaf] G87828
           => Inference: Acts on G87828 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] CXN
+       [Leaf] CXN
           => Inference: Acts on CXN (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] Cefob
+       [Leaf] Cefob
           => Inference: Acts on Cefob (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] AAT 4
+       [Leaf] AAT 4
           => Inference: Acts on AAT 4 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] Zudan
+       [Leaf] Zudan
           => Inference: Acts on Zudan (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] C9F
+       [Leaf] C9F
           => Inference: Acts on C9F (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 1f5l
+       [Leaf] 1f5l
           => Inference: Acts on 1f5l (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] CHEMBL145418
+       [Leaf] CHEMBL145418
           => Inference: Acts on CHEMBL145418 (Unknown Family). Unknown Disease related, BBBP: Fail.
-      └─ [Leaf] FLT
+       [Leaf] FLT
           => Inference: Acts on FLT (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] M.C
+       [Leaf] M.C
           => Inference: Acts on M.C (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] LS-15408
+       [Leaf] LS-15408
           => Inference: Acts on LS-15408 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] PHY
+       [Leaf] PHY
           => Inference: Acts on PHY (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] R39209
+       [Leaf] R39209
           => Inference: Acts on R39209 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] A1CMV
+       [Leaf] A1CMV
           => Inference: Acts on A1CMV (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] s4014
+       [Leaf] s4014
           => Inference: Acts on s4014 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] GBM
+       [Leaf] GBM
           => Inference: Acts on GBM (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] IYJ
+       [Leaf] IYJ
           => Inference: Acts on IYJ (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] M0382
+       [Leaf] M0382
           => Inference: Acts on M0382 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 1WE
+       [Leaf] 1WE
           => Inference: Acts on 1WE (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] CHEMBL141988
+       [Leaf] CHEMBL141988
           => Inference: Acts on CHEMBL141988 (Unknown Family). Unknown Disease related, BBBP: Fail.
-      └─ [Leaf] s5023
+       [Leaf] s5023
           => Inference: Acts on s5023 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] ARX04
+       [Leaf] ARX04
           => Inference: Acts on ARX04 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 52378-66-2
+       [Leaf] 52378-66-2
           => Inference: Acts on 52378-66-2 (Unknown Family). Unknown Disease related, BBBP: Fail.
-      └─ [Leaf] Sanval
+       [Leaf] Sanval
           => Inference: Acts on Sanval (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] Iprox
+       [Leaf] Iprox
           => Inference: Acts on Iprox (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] C72316
+       [Leaf] C72316
           => Inference: Acts on C72316 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] D02251
+       [Leaf] D02251
           => Inference: Acts on D02251 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] C07422
+       [Leaf] C07422
           => Inference: Acts on C07422 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] LFX
+       [Leaf] LFX
           => Inference: Acts on LFX (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 112598-52-4
+       [Leaf] 112598-52-4
           => Inference: Acts on 112598-52-4 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] AC1L2RWP
+       [Leaf] AC1L2RWP
           => Inference: Acts on AC1L2RWP (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 7V7
+       [Leaf] 7V7
           => Inference: Acts on 7V7 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] s1329
+       [Leaf] s1329
           => Inference: Acts on s1329 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] 77314-65-9
+       [Leaf] 77314-65-9
           => Inference: Acts on 77314-65-9 (Unknown Family). Unknown Disease related, BBBP: Fail.
-      └─ [Leaf] Compro
+       [Leaf] Compro
           => Inference: Acts on Compro (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] BDBM303165
+       [Leaf] BDBM303165
           => Inference: Acts on BDBM303165 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] CHEMBL145671
+       [Leaf] CHEMBL145671
           => Inference: Acts on CHEMBL145671 (Unknown Family). Unknown Disease related, BBBP: Fail.
-      └─ [Leaf] CWB
+       [Leaf] CWB
           => Inference: Acts on CWB (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] TH8
+       [Leaf] TH8
           => Inference: Acts on TH8 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] H31888
+       [Leaf] H31888
           => Inference: Acts on H31888 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] C07220
+       [Leaf] C07220
           => Inference: Acts on C07220 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] SK 65
+       [Leaf] SK 65
           => Inference: Acts on SK 65 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] BA-2837
+       [Leaf] BA-2837
           => Inference: Acts on BA-2837 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] Unknown
+       [Leaf] Unknown
           => Inference: Acts on Unknown (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] Mancef
+       [Leaf] Mancef
           => Inference: Acts on Mancef (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] PS-4610
+       [Leaf] PS-4610
           => Inference: Acts on PS-4610 (Unknown Family). Unknown Disease related, BBBP: Pass.
-      └─ [Leaf] L001440
+       [Leaf] L001440
           => Inference: Acts on L001440 (Unknown Family). Unknown Disease related, BBBP: Pass.

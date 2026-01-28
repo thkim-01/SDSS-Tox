@@ -36,7 +36,7 @@ class SDTPredictor(BaseModel):
         if self.model_path.exists():
             self.load(str(self.model_path))
         else:
-            # 모델이 없으면 None으로 두고, 첫 predict 호출 시 학습
+            #   None ,  predict   
             logger.info("SDT model file not found. Will train on first prediction request.")
             self.model = None
 
@@ -131,7 +131,7 @@ class SDTPredictor(BaseModel):
 
     def predict(self, features: np.ndarray, smiles: str = None) -> Dict[str, Any]:
         if self.model is None:
-            # 첫 예측 요청 시 학습 수행
+            #      
             logger.info("SDT model not loaded. Training now...")
             self.train_and_save()
             if self.model is None:

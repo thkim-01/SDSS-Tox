@@ -30,7 +30,7 @@ import colorsys
 
 st.set_page_config(
     page_title="HF-SDT Viewer | SDSS-Tox",
-    page_icon="🌳",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -356,7 +356,7 @@ def create_distribution_bar(class_dist: Dict[str, float]) -> str:
     safe_blocks = int(safe_pct / 100 * bar_width)
     toxic_blocks = bar_width - safe_blocks
     
-    bar = "█" * safe_blocks + "░" * toxic_blocks
+    bar = "" * safe_blocks + "" * toxic_blocks
     
     return f"[{bar}]\\nSafe: {safe_pct:.0f}% | Toxic: {toxic_pct:.0f}%"
 
@@ -422,7 +422,7 @@ def build_graphviz_tree(
             label = f"""<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="2">
                 <TR><TD><B><FONT POINT-SIZE="12" COLOR="{font_color}">{node.predicted_class}</FONT></B></TD></TR>
                 <TR><TD><FONT POINT-SIZE="9" COLOR="{font_color}">Confidence: {node.confidence:.1%}</FONT></TD></TR>
-                <TR><TD><FONT POINT-SIZE="8" COLOR="{font_color}">━━━━━━━━━━━━━━</FONT></TD></TR>
+                <TR><TD><FONT POINT-SIZE="8" COLOR="{font_color}"></FONT></TD></TR>
                 <TR><TD><FONT POINT-SIZE="8" COLOR="{font_color}">Safe: {node.class_distribution.get('Safe', 0):.0f}% | Toxic: {node.class_distribution.get('Toxic', 0):.0f}%</FONT></TD></TR>
                 <TR><TD><FONT POINT-SIZE="8" COLOR="{font_color}">N = {node.n_samples:,} ({node.n_samples_ratio:.1f}%)</FONT></TD></TR>
             </TABLE>>"""
@@ -446,7 +446,7 @@ def build_graphviz_tree(
                 <TR><TD><B><FONT POINT-SIZE="11" COLOR="{COLORS['text_primary']}">{node.semantic_concept}</FONT></B></TD></TR>
                 <TR><TD><FONT POINT-SIZE="10" COLOR="{COLORS['text_primary']}">{node.feature_name} ≤ {node.threshold}</FONT></TD></TR>
                 <TR><TD><FONT POINT-SIZE="8" COLOR="{COLORS['text_secondary']}">+ {corr_text}</FONT></TD></TR>
-                <TR><TD><FONT POINT-SIZE="7" COLOR="{COLORS['text_secondary']}">━━━━━━━━━━━━━━</FONT></TD></TR>
+                <TR><TD><FONT POINT-SIZE="7" COLOR="{COLORS['text_secondary']}"></FONT></TD></TR>
                 <TR><TD><FONT POINT-SIZE="8" COLOR="{COLORS['text_secondary']}">N = {node.n_samples:,} ({node.n_samples_ratio:.1f}%)</FONT></TD></TR>
                 <TR><TD><FONT POINT-SIZE="7" COLOR="{COLORS['text_secondary']}">Gini: {node.impurity:.3f}</FONT></TD></TR>
             </TABLE>>"""
@@ -596,14 +596,14 @@ def main():
     </style>
     """, unsafe_allow_html=True)
     
-    st.markdown('<p class="main-header">🌳 High-Fidelity Semantic Decision Tree</p>', unsafe_allow_html=True)
+    st.markdown('<p class="main-header"> High-Fidelity Semantic Decision Tree</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Explainable AI for Molecular Toxicity Prediction</p>', unsafe_allow_html=True)
     
     st.markdown("---")
     
     # Sidebar controls
     with st.sidebar:
-        st.header("🎛️ Tree Controls")
+        st.header(" Tree Controls")
         
         st.subheader("1. Data Configuration")
         n_samples = st.slider(
@@ -730,7 +730,7 @@ def main():
     # Info box
     st.markdown("""
     <div class="info-box">
-        <strong>📊 How to Read This Tree:</strong><br>
+        <strong> How to Read This Tree:</strong><br>
         <ul style="margin-bottom: 0;">
             <li><strong>Node Header</strong>: Abstract semantic concept (e.g., "Lipophilicity Barrier")</li>
             <li><strong>Primary Rule</strong>: The mathematical split condition</li>
@@ -752,12 +752,12 @@ def main():
         )
     
     # Display the tree
-    st.subheader("🌲 Semantic Decision Tree Visualization")
+    st.subheader(" Semantic Decision Tree Visualization")
     st.graphviz_chart(dot, use_container_width=True)
     
     # Feature importance section
     st.markdown("---")
-    st.subheader("📈 Feature Importance Analysis")
+    st.subheader(" Feature Importance Analysis")
     
     importance_df = pd.DataFrame({
         "Feature": feature_names,
@@ -776,7 +776,7 @@ def main():
         )
     
     # Dataset preview
-    with st.expander("📋 View Generated Dataset Sample"):
+    with st.expander(" View Generated Dataset Sample"):
         st.dataframe(df.head(20).style.format("{:.2f}"), use_container_width=True)
         
         st.markdown("**Label Distribution:**")

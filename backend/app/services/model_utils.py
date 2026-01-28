@@ -1,9 +1,9 @@
-"""PyTorch 기본 모델 구조 및 유틸티티.
+"""PyTorch     .
 
-Phase 1.3: 기본 모델 구조 설계
-- BaseModel: 모든 모델의 기본 클래스
-- MolecularGNN: 그래프 신경망 (Graph Convolutional Network)
-- MolecularCNN: 합성곱 신경망 (Convolutional Neural Network)
+Phase 1.3:    
+- BaseModel:    
+- MolecularGNN:   (Graph Convolutional Network)
+- MolecularCNN:   (Convolutional Neural Network)
 
 Author: DTO-DSS Team
 Date: 2026-01-20
@@ -19,9 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class BaseModel(nn.Module):
-    """모든 PyTorch 모델의 기본 클래스.
+    """ PyTorch   .
 
-    디바이스 관리 (CPU/CUDA)를 제공하는 기본 구조
+      (CPU/CUDA)   
     """
 
     def __init__(self):
@@ -30,47 +30,47 @@ class BaseModel(nn.Module):
         logger.info(f"Model initialized on device: {self.device}")
 
     def count_parameters(self) -> int:
-        """학습 가능한 파라미터 수"""
+        """   """
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
 
     def freeze_backbone(self):
-        """백본 네트워크 고정 (Transfer Learning용)"""
+        """   (Transfer Learning)"""
         for param in self.parameters():
             param.requires_grad = False
         logger.info("Backbone frozen")
 
     def unfreeze_all(self):
-        """모든 파라미터 학습 가능 설정"""
+        """    """
         for param in self.parameters():
             param.requires_grad = True
         logger.info("All parameters unfrozen")
 
 
 class MolecularGNN(BaseModel):
-    """분자 그래프 신경망 (Graph Neural Network).
+    """   (Graph Neural Network).
 
-    SMILES에서 분자 그래프로 변환한 후 GNN을 사용하여 독성 예측.
+    SMILES     GNN   .
 
-    아키텍처:
+    :
         - Graph Convolutional Layers (GCN/GAT)
         - Batch Normalization
         - Dropout for regularization
         - Fully Connected Layers
 
-    입력:
-        - Node features (원자 특성)
-        - Edge index (결합 정보)
+    :
+        - Node features ( )
+        - Edge index ( )
         - Batch vector
     """
 
     def __init__(
         self,
-        node_features: int = 10,      # 분자 descriptor 개수
-        hidden_channels: int = 128,   # 은닉 레이어 크기
-        num_layers: int = 3,         # GCN 레이어 수
+        node_features: int = 10,      #  descriptor 
+        hidden_channels: int = 128,   #   
+        num_layers: int = 3,         # GCN  
         num_classes: int = 2,         # Safe(0) / Toxic(1)
-        dropout: float = 0.5,         # Dropout 비율
-        use_gat: bool = False         # Graph Attention Network 사용 여부
+        dropout: float = 0.5,         # Dropout 
+        use_gat: bool = False         # Graph Attention Network  
     ):
         super().__init__()
 
@@ -139,29 +139,29 @@ class MolecularGNN(BaseModel):
 
 
 class MolecularCNN(BaseModel):
-    """분자 이미지 기반 합성곱 신경망.
+    """    .
 
-    분자의 2D/3D 구조를 이미지로 변환하여 CNN을 사용하여 독성 예측.
+     2D/3D    CNN   .
 
-    아키텍처:
+    :
         - Convolutional Layers (2D Conv)
         - Max/Average Pooling
         - Batch Normalization
         - Dropout for regularization
         - Fully Connected Layers
 
-    입력:
-        - 분자 이미지 [batch, channels, height, width]
+    :
+        -   [batch, channels, height, width]
     """
 
     def __init__(
         self,
-        in_channels: int = 1,       # Grayscale 분자 이미지
+        in_channels: int = 1,       # Grayscale  
         num_classes: int = 2,         # Safe(0) / Toxic(1)
-        conv_channels: list = [32, 64, 128],  # Conv 채널 크기
-        kernel_sizes: list = [3, 3, 3],          # Kernel 크기
-        pool_size: int = 2,            # Pooling 크기
-        dropout: float = 0.5,          # Dropout 비율
+        conv_channels: list = [32, 64, 128],  # Conv  
+        kernel_sizes: list = [3, 3, 3],          # Kernel 
+        pool_size: int = 2,            # Pooling 
+        dropout: float = 0.5,          # Dropout 
     ):
         super().__init__()
 
@@ -225,7 +225,7 @@ class MolecularCNN(BaseModel):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    # 테스트: GNN
+    # : GNN
     print("=" * 60)
     print("Testing MolecularGNN")
     print("=" * 60)
@@ -250,7 +250,7 @@ if __name__ == "__main__":
 
     print()
 
-    # 테스트: CNN
+    # : CNN
     print("=" * 60)
     print("Testing MolecularCNN")
     print("=" * 60)

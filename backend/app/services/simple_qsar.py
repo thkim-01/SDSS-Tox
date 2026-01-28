@@ -110,11 +110,11 @@ class SimpleQSAR:
 
 
 __all__ = ["SimpleQSAR", "RDKitNotAvailable"]
-"""Simple QSAR 예측 서비스.
+"""Simple QSAR  .
 
-Phase 5.1: 4가지 예측 방법 중 하나
-- 물리화학적 특성(Descriptors) 기반의 간단한 규칙 적용
-- Lipinski Rule of 5 등 활용
+Phase 5.1: 4    
+-  (Descriptors)    
+- Lipinski Rule of 5  
 
 Author: DTO-DSS Team
 Date: 2026-01-19
@@ -123,33 +123,33 @@ Date: 2026-01-19
 import logging
 from typing import Dict, Any
 
-# 로깅 설정
+#  
 logger = logging.getLogger(__name__)
 
 
 class SimpleQSAR:
-    """간단한 QSAR 규칙 기반 예측기.
+    """ QSAR   .
     
-    복잡한 ML 모델이 아닌, 잘 알려진 의약화학 규칙들을 사용하여
-    독성 가능성을 평가합니다.
+     ML  ,     
+      .
     """
 
     def __init__(self):
         logger.info("SimpleQSAR initialized")
 
     def predict(self, descriptors: Dict[str, float]) -> Dict[str, Any]:
-        """분자 기술자를 기반으로 독성 점수를 예측합니다.
+        """     .
         
         Args:
-            descriptors: 분자 기술자 딕셔너리 (MW, logP, HBD, HBA 등)
+            descriptors:    (MW, logP, HBD, HBA )
             
         Returns:
-            예측 결과 (score, confidence, details)
+              (score, confidence, details)
         """
         score = 0.0
         risk_factors = []
         
-        # 1. Lipinski Rule of 5 위반 (약물성 저하 -> 독성/부작용 연관 가능성)
+        # 1. Lipinski Rule of 5  (  -> /  )
         lipinski_violations = 0
         if descriptors.get("MW", 0) > 500:
             lipinski_violations += 1
@@ -164,29 +164,29 @@ class SimpleQSAR:
             lipinski_violations += 1
             risk_factors.append("HBA > 10")
             
-        # 위반이 많을수록 점수 증가 (간접적 독성 지표)
+        #     (  )
         score += lipinski_violations * 0.1
         
-        # 2. QSAR 독성 경고 구조 (Structural Alerts) - 간단한 수치 기준
-        # TPSA가 매우 낮으면(<75) 세포막 투과성이 높아 독성 위험 증가 가능
+        # 2. QSAR    (Structural Alerts) -   
+        # TPSA  (<75)       
         if descriptors.get("TPSA", 100) < 75:
             score += 0.2
             risk_factors.append("Low TPSA (<75)")
             
-        # 방향족 고리가 많으면(>3) 대사 안정성 문제 및 독성 가능성
+        #   (>3)      
         if descriptors.get("Aromatic_Rings", 0) > 3:
             score += 0.3
             risk_factors.append("High Aromatic Rings (>3)")
             
-        # logKow가 매우 높으면(>4) 생체 축적 가능성
+        # logKow  (>4)   
         if descriptors.get("logKow", 0) > 4.0:
             score += 0.2
             risk_factors.append("High logKow (>4.0)")
 
-        # 점수 정규화 (0.0 ~ 1.0)
+        #   (0.0 ~ 1.0)
         final_score = min(1.0, score)
         
-        # 신뢰도: 적용된 규칙의 수에 비례 (단순화)
+        # :     ()
         confidence = 0.6 + (len(risk_factors) * 0.05)
         confidence = min(0.9, confidence)
         

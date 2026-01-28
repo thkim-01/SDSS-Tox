@@ -1,11 +1,11 @@
-"""PyTorch Random Forest - 간단화된 버전.
+"""PyTorch Random Forest -  .
 
-scikit-learn RandomForest를 PyTorch로 재구현.
-실제 학습된 모델을 로드하여 사용하는 데모 버전.
+scikit-learn RandomForest PyTorch .
+      .
 
-Phase 1.3: PyTorch 기반 RF 구현
-- 기존 sklearn RF와 동일한 인터페이스 유지
-- 앙상블 시스템과 호환성 확보
+Phase 1.3: PyTorch  RF 
+-  sklearn RF   
+-    
 
 Author: DTO-DSS Team
 Date: 2026-01-20
@@ -22,10 +22,10 @@ logger = logging.getLogger(__name__)
 
 
 class SimplePyTorchRF(nn.Module):
-    """PyTorch Random Forest의 간단화된 버전.
+    """PyTorch Random Forest  .
 
-    학습 없이 미구현된 모델로, 데모용으로만 사용.
-    실제 학습에는 tree-based models가 필요하므로 scikit-learn을 유지하는 것이 권장됨.
+       ,  .
+      tree-based models  scikit-learn   .
     """
 
     def __init__(self, num_trees: int = 100, num_features: int = 10):
@@ -34,10 +34,10 @@ class SimplePyTorchRF(nn.Module):
         self.num_features = num_features
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        # 각 트리의 가중치 (랜덤하게 초기화)
+        #    ( )
         self.tree_weights = nn.Parameter(torch.ones(num_trees, device=self.device))
 
-        # 앙상블 평균 계산
+        #   
         self.ensemble_mean = nn.Linear(num_trees, 1)
 
         logger.info(
@@ -49,46 +49,46 @@ class SimplePyTorchRF(nn.Module):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Forward pass - 랜덤 앙상블."""
-        # 각 트리는 랜덤 예측 (데모에서는 가중합)
+        """Forward pass -  ."""
+        #     ( )
         tree_predictions = torch.randn(x.size(0), self.num_trees, device=self.device)
 
-        # 가중 평균
+        #  
         weighted_sum = torch.sum(
             tree_predictions * self.tree_weights.view(1, -1),
             dim=1,
             keepdim=True
         ).squeeze()
 
-        # Sigmoid로 확률로 변환
+        # Sigmoid  
         probability = torch.sigmoid(weighted_sum / self.num_trees)
 
-        # [safe_prob, toxic_prob] 형태로 반환
+        # [safe_prob, toxic_prob]  
         return torch.stack([1 - probability, probability], dim=1)
 
     def predict_proba(self, x: torch.Tensor) -> torch.Tensor:
-        """확률 예측.
+        """ .
 
         Returns:
-            [batch_size, 2] 형태의 텐서 (Safe, Toxic)
+            [batch_size, 2]   (Safe, Toxic)
         """
         with torch.no_grad():
             forward_output = self.forward(x)
-            # forward_output은 이미 [batch, 2] 형태이므로 그대로 반환
+            # forward_output  [batch, 2]   
             return forward_output
 
     def predict(self, x: torch.Tensor) -> torch.Tensor:
-        """클래스 예측."""
+        """ ."""
         proba = self.predict_proba(x)
         return torch.argmax(proba, dim=1)
 
 
-# ==================== 호환성 레이어 ====================
+# ====================   ====================
 
 class RFPredictorCompat:
-    """기존 RFPredictor와 호환되는 인터페이스.
+    """ RFPredictor  .
 
-    PyTorch RF를 기존 앙상블 시스템에 통합하기 위한 레이어.
+    PyTorch RF      .
     """
 
     def __init__(self, model: SimplePyTorchRF):
@@ -96,7 +96,7 @@ class RFPredictorCompat:
         self.device = model.device
 
     def predict(self, feature_vector: np.ndarray) -> Dict[str, Any]:
-        """기존 RFPredictor.predict()와 동일한 형태로 예측.
+        """ RFPredictor.predict()   .
 
         Returns:
             {
@@ -106,10 +106,10 @@ class RFPredictorCompat:
                 'class_name': str ('Safe' or 'Toxic'),
                 'confidence': float (0-1),
                 'probabilities': dict (0: Safe_prob, 1: Toxic_prob),
-                'chemical_id': str (입력값)
+                'chemical_id': str ()
             }
         """
-        # numpy to tensor - 2D 형태 유지
+        # numpy to tensor - 2D  
         if len(feature_vector.shape) == 1:
             x_tensor = torch.FloatTensor(feature_vector.reshape(1, -1)).to(self.device)
         else:
@@ -119,12 +119,12 @@ class RFPredictorCompat:
         else:
             x_tensor = torch.FloatTensor(feature_vector).to(self.device)
 
-        # 예측
+        # 
         with torch.no_grad():
             proba = self.model.predict_proba(x_tensor)
             pred_class = self.model.predict(x_tensor)
 
-        # 결과 추출 (2D tensor에서 numpy 변환)
+        #   (2D tensor numpy )
         proba_numpy = proba.cpu().numpy()
         safe_prob = proba_numpy[0, 0]
         toxic_prob = proba_numpy[0, 1]
@@ -144,7 +144,7 @@ class RFPredictorCompat:
         }
 
 
-# ==================== 테스트 코드 ====================
+# ====================   ====================
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     print("PyTorch Random Forest - Simplified Demo")
     print("=" * 60)
 
-    # 모델 생성
+    #  
     model = SimplePyTorchRF(num_trees=50, num_features=10)
 
     print(f"\nModel Structure:")
@@ -162,12 +162,12 @@ if __name__ == "__main__":
     print(f"  - Device: {model.device}")
     print(f"  - Total Parameters: {sum(p.numel() for p in model.parameters())}")
 
-    # 테스트 데이터
+    #  
     print("\nTesting with random input...")
     X_test = np.random.randn(5, 10)
     X_tensor = torch.FloatTensor(X_test).to(model.device)
 
-    # 예측
+    # 
     print("\nPredictions (probabilities):")
     with torch.no_grad():
         pred_proba = model.predict_proba(X_tensor)
@@ -180,10 +180,10 @@ if __name__ == "__main__":
             print(f"    Toxic probability: {toxic_p:.4f}")
             print(f"    Predicted class: {'Safe' if safe_p > toxic_p else 'Toxic'}")
 
-    # 호환성 레이어 테스트 (첫 샘플만)
+    #    ( )
     print("\nTesting compatibility layer...")
     compat = RFPredictorCompat(model)
-    first_sample = X_test[0]  # 첫 샘플 (10 features)
+    first_sample = X_test[0]  #   (10 features)
     result = compat.predict(first_sample)
     print(f"\nCompatibility test result:")
     print(f"  Model: {result['model']}")

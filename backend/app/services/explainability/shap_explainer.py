@@ -1,11 +1,11 @@
-"""SHAP 기반 RandomForest 예측 설명 서비스.
+"""SHAP  RandomForest   .
 
-Phase 3.2: SHAP Explainer 구현
-- TreeExplainer를 사용하여 RandomForest 예측 설명
-- 각 특성의 기여도(SHAP values) 계산
-- Feature Importance 순위화
-- 자연어 해석 생성
-- Force Plot 데이터 생성
+Phase 3.2: SHAP Explainer 
+- TreeExplainer  RandomForest  
+-   (SHAP values) 
+- Feature Importance 
+-   
+- Force Plot  
 
 Author: DTO-DSS Team
 Date: 2026-01-19
@@ -24,27 +24,27 @@ except ImportError:
 
 from sklearn.ensemble import RandomForestClassifier
 
-# Logger 설정
+# Logger 
 logger = logging.getLogger(__name__)
 
 
 class SHAPNotAvailableError(ImportError):
-    """SHAP 라이브러리가 설치되지 않았을 때 발생하는 예외."""
+    """SHAP      ."""
     pass
 
 
 class SHAPExplainer:
-    """RandomForest 예측에 대한 SHAP 기반 설명 서비스.
+    """RandomForest   SHAP   .
 
-    TreeExplainer를 사용하여 각 특성이 예측에 미친 영향을 계산하고,
-    인간이 읽을 수 있는 설명으로 변환합니다.
+    TreeExplainer       ,
+         .
 
     Attributes:
-        rf_model: RandomForestClassifier 모델.
-        explainer: SHAP TreeExplainer 인스턴스.
-        feature_names: 10개의 특성 이름 리스트.
-        class_names: 클래스 인덱스 → 이름 매핑.
-        expected_values: 각 클래스의 base value.
+        rf_model: RandomForestClassifier .
+        explainer: SHAP TreeExplainer .
+        feature_names: 10   .
+        class_names:   →  .
+        expected_values:   base value.
 
     Example:
         >>> from rf_predictor import RFPredictor
@@ -55,35 +55,35 @@ class SHAPExplainer:
         >>> print(result['interpretation'])
     """
 
-    # 10개의 특성 이름 (고정 순서)
+    # 10   ( )
     FEATURE_NAMES: List[str] = [
-        "MW",              # 분자량
-        "logKow",          # 옥탄올-물 분배 계수
-        "HBD",             # 수소 결합 공여체 수
-        "HBA",             # 수소 결합 수용체 수
-        "nRotB",           # 회전 가능한 결합 수
-        "TPSA",            # 극성 표면적
-        "Aromatic_Rings",  # 방향족 고리 수
-        "Heteroatom_Count", # 이종 원자 수
-        "Heavy_Atom_Count", # 중원자 수
-        "logP"             # 지질친화성
+        "MW",              # 
+        "logKow",          # -  
+        "HBD",             #    
+        "HBA",             #    
+        "nRotB",           #    
+        "TPSA",            #  
+        "Aromatic_Rings",  #   
+        "Heteroatom_Count", #   
+        "Heavy_Atom_Count", #  
+        "logP"             # 
     ]
 
-    # 특성별 한글 설명
+    #   
     FEATURE_DESCRIPTIONS: Dict[str, str] = {
-        "MW": "분자량",
-        "logKow": "지질친화성(옥탄올-물 분배계수)",
-        "HBD": "수소결합 공여체 수",
-        "HBA": "수소결합 수용체 수",
-        "nRotB": "회전가능 결합 수",
-        "TPSA": "극성 표면적",
-        "Aromatic_Rings": "방향족 고리 수",
-        "Heteroatom_Count": "이종원자 수",
-        "Heavy_Atom_Count": "중원자 수",
-        "logP": "지질친화성(logP)"
+        "MW": "",
+        "logKow": "(- )",
+        "HBD": "  ",
+        "HBA": "  ",
+        "nRotB": "  ",
+        "TPSA": " ",
+        "Aromatic_Rings": "  ",
+        "Heteroatom_Count": " ",
+        "Heavy_Atom_Count": " ",
+        "logP": "(logP)"
     }
 
-    # 클래스 이름
+    #  
     CLASS_NAMES: Dict[int, str] = {
         0: "Safe",
         1: "Moderate",
@@ -95,16 +95,16 @@ class SHAPExplainer:
         rf_model: RandomForestClassifier,
         background_data: Optional[np.ndarray] = None
     ) -> None:
-        """SHAP Explainer를 초기화한다.
+        """SHAP Explainer .
 
         Args:
-            rf_model: 학습된 RandomForestClassifier 모델.
-            background_data: SHAP 계산에 사용할 배경 데이터 (선택사항).
-                제공되지 않으면 TreeExplainer의 기본 방식 사용.
+            rf_model:  RandomForestClassifier .
+            background_data: SHAP     ().
+                  TreeExplainer   .
 
         Raises:
-            SHAPNotAvailableError: SHAP 라이브러리가 설치되지 않았을 때.
-            ValueError: rf_model이 RandomForestClassifier가 아닐 때.
+            SHAPNotAvailableError: SHAP    .
+            ValueError: rf_model RandomForestClassifier  .
         """
         if not SHAP_AVAILABLE:
             raise SHAPNotAvailableError(
@@ -122,11 +122,11 @@ class SHAPExplainer:
         self.class_names = self.CLASS_NAMES.copy()
         self.background_data = background_data
 
-        # TreeExplainer 초기화
+        # TreeExplainer 
         logger.info("Initializing SHAP TreeExplainer...")
         self.explainer = shap.TreeExplainer(rf_model)
 
-        # Expected values (base values) 저장
+        # Expected values (base values) 
         if hasattr(self.explainer, 'expected_value'):
             ev = self.explainer.expected_value
             if isinstance(ev, np.ndarray):
@@ -146,19 +146,19 @@ class SHAPExplainer:
         feature_vector: np.ndarray,
         target_class: int = 2  # Toxic class by default
     ) -> Dict[str, Any]:
-        """개별 예측에 대한 SHAP 기반 설명을 생성한다.
+        """   SHAP   .
 
         Args:
-            feature_vector: (1, 10) 또는 (10,) shape의 특성 벡터.
-            target_class: 분석할 타겟 클래스 (0=Safe, 1=Moderate, 2=Toxic).
-                기본값은 2 (Toxic).
+            feature_vector: (1, 10)  (10,) shape  .
+            target_class:    (0=Safe, 1=Moderate, 2=Toxic).
+                 2 (Toxic).
 
         Returns:
-            SHAP values, feature importance, 자연어 해석을 포함한 딕셔너리.
+            SHAP values, feature importance,    .
 
         Raises:
-            ValueError: feature_vector의 shape이 올바르지 않을 때.
-            RuntimeError: SHAP 계산 중 에러가 발생했을 때.
+            ValueError: feature_vector shape   .
+            RuntimeError: SHAP     .
 
         Example Output:
             {
@@ -170,16 +170,16 @@ class SHAPExplainer:
                 "interpretation": "This prediction is driven by..."
             }
         """
-        # 입력 검증 및 reshape
+        #    reshape
         features = self._validate_and_reshape(feature_vector)
 
         logger.info(f"Calculating SHAP values for target class {target_class}...")
 
         try:
-            # SHAP values 계산
+            # SHAP values 
             shap_values = self.explainer.shap_values(features)
 
-            # shap_values는 [class_0, class_1, class_2] 리스트
+            # shap_values [class_0, class_1, class_2] 
             if isinstance(shap_values, list):
                 target_shap = np.array(shap_values[target_class][0]).flatten()
                 if target_class < len(self.expected_values):
@@ -187,23 +187,23 @@ class SHAPExplainer:
                 else:
                     base_value = 0.0
             else:
-                # 단일 값인 경우
+                #   
                 target_shap = np.array(shap_values[0]).flatten()
                 base_value = float(np.asarray(self.expected_values[0]).item()) if len(self.expected_values) > 0 else 0.0
 
-            # SHAP values 리스트 생성
+            # SHAP values  
             shap_list = [
                 {"feature": name, "shap_value": float(np.asarray(value).item())}
                 for name, value in zip(self.feature_names, target_shap)
             ]
 
-            # Feature Importance 순위 (절대값 기준 정렬)
+            # Feature Importance  (  )
             feature_importance = self._rank_features(target_shap)
 
-            # 자연어 해석 생성
+            #   
             interpretation = self._generate_interpretation(feature_importance, target_class)
 
-            # 한글 해석 추가
+            #   
             ko_interpretation = self._generate_korean_interpretation(feature_importance, target_class)
 
             result = {
@@ -227,16 +227,16 @@ class SHAPExplainer:
             raise RuntimeError(error_msg) from e
 
     def plot_force_plot(self, feature_vector: np.ndarray, target_class: int = 2) -> Dict[str, Any]:
-        """SHAP Force Plot 데이터를 생성한다.
+        """SHAP Force Plot  .
 
-        JavaFX에서 시각화할 수 있는 JSON 형식으로 반환합니다.
+        JavaFX    JSON  .
 
         Args:
-            feature_vector: (1, 10) 또는 (10,) shape의 특성 벡터.
-            target_class: 분석할 타겟 클래스.
+            feature_vector: (1, 10)  (10,) shape  .
+            target_class:   .
 
         Returns:
-            Force Plot 시각화를 위한 데이터 딕셔너리.
+            Force Plot    .
         """
         features = self._validate_and_reshape(feature_vector)
 
@@ -252,7 +252,7 @@ class SHAPExplainer:
                 target_shap = shap_values[0]
                 base_value = float(self.expected_values[0]) if len(self.expected_values) > 0 else 0.0
 
-            # Feature 정보 생성
+            # Feature  
             feature_data = []
             for i, name in enumerate(self.feature_names):
                 feature_data.append({
@@ -263,7 +263,7 @@ class SHAPExplainer:
                     "impact": "positive" if target_shap[i] > 0 else "negative"
                 })
 
-            # SHAP value 기준으로 정렬
+            # SHAP value  
             feature_data.sort(key=lambda x: abs(x['shap_value']), reverse=True)
 
             return {
@@ -287,14 +287,14 @@ class SHAPExplainer:
         test_set: np.ndarray,
         target_class: int = 2
     ) -> Dict[str, Any]:
-        """테스트 세트에 대한 전체 Feature Importance를 계산한다.
+        """    Feature Importance .
 
         Args:
-            test_set: (N, 10) shape의 테스트 데이터.
-            target_class: 분석할 타겟 클래스.
+            test_set: (N, 10) shape  .
+            target_class:   .
 
         Returns:
-            평균 SHAP values와 Feature Importance 순위.
+             SHAP values Feature Importance .
         """
         if test_set.ndim == 1:
             test_set = test_set.reshape(1, -1)
@@ -312,10 +312,10 @@ class SHAPExplainer:
             else:
                 target_shap = shap_values
 
-            # 평균 절대 SHAP value
+            #   SHAP value
             mean_abs_shap = np.abs(target_shap).mean(axis=0)
 
-            # 순위화
+            # 
             ranked_indices = np.argsort(-mean_abs_shap)
 
             feature_importance = [
@@ -348,7 +348,7 @@ class SHAPExplainer:
             raise RuntimeError(error_msg) from e
 
     def _validate_and_reshape(self, feature_vector: np.ndarray) -> np.ndarray:
-        """입력 벡터를 검증하고 (1, 10) shape으로 변환한다."""
+        """   (1, 10) shape ."""
         if not isinstance(feature_vector, np.ndarray):
             feature_vector = np.array(feature_vector)
 
@@ -365,11 +365,11 @@ class SHAPExplainer:
         return feature_vector
 
     def _rank_features(self, shap_values: np.ndarray) -> List[Dict[str, Any]]:
-        """SHAP values를 기반으로 Feature Importance 순위를 생성한다."""
-        # (feature_name, shap_value) 튜플 리스트
+        """SHAP values  Feature Importance  ."""
+        # (feature_name, shap_value)  
         feature_shap_pairs = list(zip(self.feature_names, shap_values))
 
-        # 절대값 기준 정렬
+        #   
         sorted_pairs = sorted(feature_shap_pairs, key=lambda x: abs(x[1]), reverse=True)
 
         return [
@@ -388,7 +388,7 @@ class SHAPExplainer:
         feature_importance: List[Dict[str, Any]],
         target_class: int
     ) -> str:
-        """영어 자연어 해석을 생성한다."""
+        """   ."""
         class_name = self.class_names.get(target_class, "Unknown")
         top_3 = feature_importance[:3]
 
@@ -408,22 +408,22 @@ class SHAPExplainer:
         feature_importance: List[Dict[str, Any]],
         target_class: int
     ) -> str:
-        """한글 자연어 해석을 생성한다."""
-        class_name = {0: "안전", 1: "보통", 2: "독성"}.get(target_class, "알 수 없음")
+        """   ."""
+        class_name = {0: "", 1: "", 2: ""}.get(target_class, "  ")
         top_3 = feature_importance[:3]
 
-        explanation = f"이 화학물질의 '{class_name}' 예측은 주로 다음 특성에 의해 결정되었습니다:\n"
+        explanation = f"  '{class_name}'      :\n"
 
         for i, feat in enumerate(top_3, 1):
-            direction = "높은" if feat['impact'] == "increases" else "낮은"
+            direction = "" if feat['impact'] == "increases" else ""
             desc = self.FEATURE_DESCRIPTIONS.get(feat['feature'], feat['feature'])
-            impact = "↑ 독성 증가" if feat['impact'] == "increases" else "↓ 독성 감소"
-            explanation += f"  {i}. {desc}: {direction} 값 → {impact} (SHAP: {feat['shap_value']:.3f})\n"
+            impact = "↑  " if feat['impact'] == "increases" else "↓  "
+            explanation += f"  {i}. {desc}: {direction}  → {impact} (SHAP: {feat['shap_value']:.3f})\n"
 
         return explanation.strip()
 
     def get_feature_names(self) -> List[str]:
-        """특성 이름 목록을 반환한다."""
+        """   ."""
         return self.feature_names.copy()
 
 
@@ -432,24 +432,24 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
 
-    # 더미 모델로 테스트
+    #   
     from sklearn.datasets import make_classification
 
     X, y = make_classification(n_samples=100, n_features=10, n_classes=3, n_informative=8, random_state=42)
     model = RandomForestClassifier(n_estimators=50, random_state=42)
     model.fit(X, y)
 
-    # SHAP Explainer 테스트
+    # SHAP Explainer 
     explainer = SHAPExplainer(model)
 
-    # 단일 예측 설명
+    #   
     sample = np.array([[180.16, 1.19, 1, 4, 3, 63.60, 1, 4, 13, 0.89]])
     result = explainer.explain_prediction(sample)
 
     print("\n=== SHAP Explanation ===")
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
-    # Force Plot 데이터
+    # Force Plot 
     force_plot = explainer.plot_force_plot(sample)
     print("\n=== Force Plot Data ===")
     print(json.dumps(force_plot, indent=2, ensure_ascii=False))

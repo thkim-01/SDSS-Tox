@@ -1,9 +1,9 @@
-"""Drug Target Ontology 규칙 엔진.
+"""Drug Target Ontology  .
 
 Phase 4.2: DTO Rule Engine
-- 온톨로지 기반 규칙 정의 및 매칭
-- RandomForest 예측과 규칙 비교
-- 독성 관련 규칙 생성/검증
+-      
+- RandomForest   
+-    /
 
 Author: DTO-DSS Team
 Date: 2026-01-19
@@ -14,12 +14,12 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 from enum import Enum
 
-# 로깅 설정
+#  
 logger = logging.getLogger(__name__)
 
 
 class ToxicityLevel(Enum):
-    """독성 수준."""
+    """ ."""
     SAFE = 0
     MODERATE = 1
     TOXIC = 2
@@ -28,16 +28,16 @@ class ToxicityLevel(Enum):
 
 @dataclass
 class Rule:
-    """온톨로지 규칙."""
+    """ ."""
     name: str
     description: str
-    antecedents: List[Tuple[str, str, str]]  # (predicate, subject, object) 패턴
+    antecedents: List[Tuple[str, str, str]]  # (predicate, subject, object) 
     consequent: Tuple[str, Any]  # (property, value)
     confidence: float
     category: str = "general"
 
     def to_dict(self) -> Dict[str, Any]:
-        """딕셔너리로 변환."""
+        """ ."""
         return {
             "name": self.name,
             "description": self.description,
@@ -53,7 +53,7 @@ class Rule:
 
 @dataclass
 class RuleMatchResult:
-    """규칙 매칭 결과."""
+    """  ."""
     rule_name: str
     matched: bool
     antecedents_met: List[str]
@@ -64,7 +64,7 @@ class RuleMatchResult:
 
 @dataclass
 class ValidationResult:
-    """검증 결과."""
+    """ ."""
     chemical_id: Optional[str]
     rf_prediction: str
     rf_confidence: float
@@ -77,13 +77,13 @@ class ValidationResult:
 
 
 class DTORuleEngine:
-    """Drug Target Ontology 기반 규칙 엔진.
+    """Drug Target Ontology   .
 
-    온톨로지에서 정의된 규칙을 적용하여 RandomForest 예측을 검증합니다.
+        RandomForest  .
 
     Attributes:
-        rules: 적용할 규칙 목록.
-        dto_parser: DTOParser 인스턴스 (선택사항).
+        rules:   .
+        dto_parser: DTOParser  ().
 
     Example:
         >>> engine = DTORuleEngine()
@@ -92,7 +92,7 @@ class DTORuleEngine:
         >>> print(result.agreement)  # "AGREE" or "DISAGREE"
     """
 
-    # 분자 기술자 기반 독성 규칙
+    #     
     DESCRIPTOR_RULES: List[Rule] = [
         Rule(
             name="high_logkow_toxicity",
@@ -437,7 +437,7 @@ class DTORuleEngine:
         return "\n".join(lines)
 
     def get_all_rules(self) -> List[Dict[str, Any]]:
-        """모든 규칙을 반환한다."""
+        """  ."""
         return [rule.to_dict() for rule in self.rules]
 
 
@@ -446,16 +446,16 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
 
-    # 테스트
+    # 
     engine = DTORuleEngine()
 
-    # 예측 결과 시뮬레이션
+    #   
     rf_prediction = {
         "class_name": "Toxic",
         "confidence": 0.82
     }
 
-    # 기술자 (Aspirin 유사)
+    #  (Aspirin )
     descriptors = {
         "MW": 180.16,
         "logKow": 1.19,

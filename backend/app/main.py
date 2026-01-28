@@ -1,4 +1,4 @@
-'''FastAPI 메인 애플리케이션.'''
+'''FastAPI  .'''
 
 import logging
 from contextlib import asynccontextmanager
@@ -40,14 +40,14 @@ from app.services.predictors.ensemble_dss import EnsembleDSS
 from app.services.predictors.combined_predictor import CombinedPredictor
 from app.services.data.dataset_loader import DatasetLoader
 
-# 로깅 설정
+#  
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# 전역 인스턴스 (lifespan에서 초기화)
+#   (lifespan )
 model_manager: Optional[object] = None
 shap_explainer: Optional[object] = None
 rule_engine: Optional[object] = None
@@ -58,16 +58,16 @@ combined_predictor: Optional[object] = None
 dataset_loader: Optional[object] = None
 
 
-# ==================== 분자명 조회 헬퍼 ====================
+# ====================    ====================
 
 def get_molecule_name_from_smiles(smiles: str) -> str:
-    """SMILES에서 분자명 조회.
+    """SMILES  .
     
     Args:
         smiles: SMILES string
     
     Returns:
-        분자명 또는 "Unknown"
+          "Unknown"
     """
     if not RDKIT_CORE_AVAILABLE or not Chem:
         return "Unknown"
@@ -77,11 +77,11 @@ def get_molecule_name_from_smiles(smiles: str) -> str:
         if not mol:
             return "Unknown"
         
-        # IUPAC 이름 시도
+        # IUPAC  
         try:
             iupac_name = Chem.MolToIUPACName(mol)
             if iupac_name:
-                # IUPAC 이름이 너무 길면 common 이름 시도
+                # IUPAC    common  
                 if len(iupac_name) > 100:
                     try:
                         common_name = Chem.MolToSmiles(mol)
@@ -92,7 +92,7 @@ def get_molecule_name_from_smiles(smiles: str) -> str:
         except:
             pass
         
-        # InChI key 시도
+        # InChI key 
         try:
             inchi_key = Chem.MolToInchiKey(mol)
             return f"InChI: {inchi_key[:20]}"
@@ -106,7 +106,7 @@ def get_molecule_name_from_smiles(smiles: str) -> str:
 
 
 def compute_descriptors(smiles: str) -> dict:
-    """RDKit을 사용하여 분자 기술자 계산."""
+    """RDKit    ."""
     if not RDKIT_CORE_AVAILABLE or not Chem:
         return {}
     try:
@@ -170,14 +170,14 @@ def get_feature_val(descriptors: dict, key: str, default: float = 0.0) -> float:
     return default
 
 
-# ==================== FastAPI 애플리케이션 ====================
+# ==================== FastAPI  ====================
 
-# 모델 파일 경로 (기본 RandomForest 모델)
+#    ( RandomForest )
 MODEL_PATH = Path(__file__).parent.parent / "models" / "trained_rf_model.pkl"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """앱 시작·종료 시 모델 로드·정리."""
+    """ ·   ·."""
     global model_manager, shap_explainer, rule_engine, simple_qsar, read_across, ensemble_dss, combined_predictor, dataset_loader
     logger.info("Loading models...")
     try:
@@ -205,7 +205,7 @@ async def lifespan(app: FastAPI):
              logger.info("Decision Tree model loaded/trained.")
              
         sdt_path = MODEL_PATH.parent / "trained_sdt.pkl"
-        # SDT 학습은 비동기로 처리하여 서버 시작을 지연시키지 않음
+        # SDT       
         if sdt_path.exists():
             if model_manager.load_model("sdt", str(sdt_path), set_active=False):
                 logger.info("SDT model loaded.")
@@ -224,7 +224,7 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.warning(f"SHAP init failed: {e}")
 
-    # 기타 서비스 초기화
+    #   
     try:
         rule_engine = DTORuleEngine()
         logger.info("DTORuleEngine initialized")
@@ -257,7 +257,7 @@ async def lifespan(app: FastAPI):
         logger.error(f"DatasetLoader init error: {e}")
 
     yield
-    # 정리 단계
+    #  
     logger.info("Unloading models...")
     model_manager = None
     shap_explainer = None
@@ -267,7 +267,7 @@ async def lifespan(app: FastAPI):
     ensemble_dss = None
     combined_predictor = None
     dataset_loader = None
-# FastAPI 앱 생성
+# FastAPI  
 app = FastAPI(
     title="DTO-DSS API",
     description="Drug Target Ontology Decision Support System - RandomForest + SHAP API",
@@ -275,7 +275,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS 설정
+# CORS 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -284,20 +284,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ==================== Pydantic 모델 ====================
+# ==================== Pydantic  ====================
 
 class DescriptorInput(BaseModel):
-    """분자 기술자 입력 모델."""
-    MW: float = Field(..., description="분자량", ge=0)
-    logKow: float = Field(..., description="옥탄올-물 분배계수")
-    HBD: int = Field(..., description="수소 결합 공여체 수", ge=0)
-    HBA: int = Field(..., description="수소 결합 수용체 수", ge=0)
-    nRotB: int = Field(..., description="회전 가능 결합 수", ge=0)
-    TPSA: float = Field(..., description="극성 표면적", ge=0)
-    Aromatic_Rings: int = Field(..., description="방향족 고리 수", ge=0)
-    Heteroatom_Count: int = Field(..., description="이종원자 수", ge=0)
-    Heavy_Atom_Count: int = Field(..., description="중원자 수", ge=0)
-    logP: float = Field(..., description="지질친화성 logP")
+    """   ."""
+    MW: float = Field(..., description="", ge=0)
+    logKow: float = Field(..., description="- ")
+    HBD: int = Field(..., description="   ", ge=0)
+    HBA: int = Field(..., description="   ", ge=0)
+    nRotB: int = Field(..., description="   ", ge=0)
+    TPSA: float = Field(..., description=" ", ge=0)
+    Aromatic_Rings: int = Field(..., description="  ", ge=0)
+    Heteroatom_Count: int = Field(..., description=" ", ge=0)
+    Heavy_Atom_Count: int = Field(..., description=" ", ge=0)
+    logP: float = Field(..., description=" logP")
     class Config:
         json_schema_extra = {
             "example": {
@@ -315,15 +315,15 @@ class DescriptorInput(BaseModel):
         }
 
 class PredictionRequest(BaseModel):
-    """예측 요청 모델."""
-    chemical_id: Optional[str] = Field(None, description="화학물질 ID")
-    descriptors: DescriptorInput = Field(..., description="10개 분자 기술자")
+    """  ."""
+    chemical_id: Optional[str] = Field(None, description=" ID")
+    descriptors: DescriptorInput = Field(..., description="10  ")
 
 class SHAPRequest(BaseModel):
-    """SHAP 설명 요청 모델."""
-    chemical_id: Optional[str] = Field(None, description="화학물질 ID")
-    descriptors: DescriptorInput = Field(..., description="10개 분자 기술자")
-    target_class: int = Field(2, description="타겟 클래스 (0=Safe, 1=Moderate, 2=Toxic)", ge=0, le=2)
+    """SHAP   ."""
+    chemical_id: Optional[str] = Field(None, description=" ID")
+    descriptors: DescriptorInput = Field(..., description="10  ")
+    target_class: int = Field(2, description="  (0=Safe, 1=Moderate, 2=Toxic)", ge=0, le=2)
 
 class QSARRequest(BaseModel):
     smiles: Optional[str] = Field(None, description="SMILES string")
@@ -331,7 +331,7 @@ class QSARRequest(BaseModel):
     return_descriptors: bool = Field(True, description="Return computed descriptors if smiles provided")
 
 class HealthResponse(BaseModel):
-    """헬스체크 응답 모델."""
+    """  ."""
     status: str
     active_model: str
     rf_predictor: str
@@ -350,10 +350,10 @@ class ModelSwitchRequest(BaseModel):
     class Config:
         protected_namespaces = ()
 
-# ==================== 헬퍼 함수 ====================
+# ====================   ====================
 
 def descriptors_to_vector(descriptors: DescriptorInput) -> np.ndarray:
-    """DescriptorInput을 numpy 배열로 변환."""
+    """DescriptorInput numpy  ."""
     return np.array([[
         descriptors.MW,
         descriptors.logKow,
@@ -367,7 +367,7 @@ def descriptors_to_vector(descriptors: DescriptorInput) -> np.ndarray:
         descriptors.logP,
     ]])
 
-# ==================== API 엔드포인트 ====================
+# ==================== API  ====================
 
 @app.get("/", tags=["Root"])
 async def root():
@@ -1211,15 +1211,15 @@ async def get_advanced_plot():
     
 
 class BenchmarkPlotRequest(BaseModel):
-    """벤치마크 회귀 플롯 요청"""
-    results: list = Field(..., description="벤치마크 결과 리스트")
-    x_descriptor: str = Field(default="LogP", description="X축 분자 기술자")
-    y_descriptor: str = Field(default="MW", description="Y축 분자 기술자")
-    coloring: str = Field(default="TPSA", description="색상 기준 분자 기술자")
-    x_log_scale: bool = Field(default=False, description="X축 로그 스케일 여부")
-    y_log_scale: bool = Field(default=False, description="Y축 로그 스케일 여부")
-    show_linear: bool = Field(default=False, description="Linear Regression 표시 여부")
-    show_ransac: bool = Field(default=False, description="RANSAC 표시 여부")
+    """   """
+    results: list = Field(..., description="  ")
+    x_descriptor: str = Field(default="LogP", description="X  ")
+    y_descriptor: str = Field(default="MW", description="Y  ")
+    coloring: str = Field(default="TPSA", description="   ")
+    x_log_scale: bool = Field(default=False, description="X   ")
+    y_log_scale: bool = Field(default=False, description="Y   ")
+    show_linear: bool = Field(default=False, description="Linear Regression  ")
+    show_ransac: bool = Field(default=False, description="RANSAC  ")
 
 
 @app.post("/analysis/benchmark-plot", response_class=HTMLResponse, tags=["Analysis"])
@@ -1245,7 +1245,7 @@ async def get_benchmark_plot(request: BenchmarkPlotRequest):
     for i, r in enumerate(request.results):
         smiles = r.get('smiles', '')
         
-        # 분자명 조회 (SMILES → 이름 변환)
+        #   (SMILES →  )
         molecule_name = get_molecule_name_from_smiles(smiles)
         
         item = {
@@ -1461,9 +1461,9 @@ async def get_benchmark_plot(request: BenchmarkPlotRequest):
 # ==================== Decision Tree Analysis ====================
 
 class DecisionTreeRequest(BaseModel):
-    """Decision Tree 시각화 요청"""
-    max_depth: int = Field(default=5, description="트리 최대 깊이")
-    use_semantic: bool = Field(default=False, description="Ontology 의미론적 특성 사용 여부")
+    """Decision Tree  """
+    max_depth: int = Field(default=5, description="  ")
+    use_semantic: bool = Field(default=False, description="Ontology    ")
 
 
 @app.post("/analysis/decision-tree", response_class=HTMLResponse, tags=["Analysis"])
@@ -1778,14 +1778,14 @@ async def get_decision_tree_plot(request: DecisionTreeRequest):
 
 
 class DecisionBoundary2DRequest(BaseModel):
-    """2D 결정 경계 요청"""
-    x_feature: str = Field(default="LogP", description="X축 특성")
-    y_feature: str = Field(default="MW", description="Y축 특성")
-    dataset_name: Optional[str] = Field(default=None, description="데이터셋 이름")
-    model_type: str = Field(default="random_forest", description="시각화에 사용할 모델")
+    """2D   """
+    x_feature: str = Field(default="LogP", description="X ")
+    y_feature: str = Field(default="MW", description="Y ")
+    dataset_name: Optional[str] = Field(default=None, description=" ")
+    model_type: str = Field(default="random_forest", description="  ")
     sample_size: Optional[int] = Field(
         default=500,
-        description="결정 경계 생성 시 사용할 샘플 수 (최대 500 권장)"
+        description="       ( 500 )"
     )
 
     class Config:
@@ -1815,7 +1815,7 @@ async def get_decision_boundary_2d(request: DecisionBoundary2DRequest):
     max_samples = request.sample_size if request.sample_size else 500
     if max_samples <= 0:
         max_samples = 500
-    max_samples = min(max_samples, 500)  # 안전 상한
+    max_samples = min(max_samples, 500)  #  
     if dataset_loader:
         if request.dataset_name:
             # Load specific dataset (limit 500 for performance)

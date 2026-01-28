@@ -26,12 +26,12 @@ class InvalidModelError(ValueError):
 
 
 class RFPredictor(BaseModel):
-    """RandomForest 기반 독성 예측 서비스.
+    """RandomForest    .
 
     Attributes:
-        model: 로드된 RandomForestClassifier 인스턴스.
-        feature_names: 모델이 기대하는 특징 이름 리스트.
-        classes_: 모델이 예측하는 클래스 인덱스 배열.
+        model:  RandomForestClassifier .
+        feature_names:     .
+        classes_:     .
     """
 
     FEATURE_NAMES: List[str] = [
@@ -50,14 +50,14 @@ class RFPredictor(BaseModel):
     CLASS_NAMES: Dict[int, str] = {0: "Safe", 1: "Moderate", 2: "Toxic"}
 
     def __init__(self, model_path: str) -> None:
-        """RandomForest 모델을 로드한다.
+        """RandomForest  .
 
         Args:
-            model_path (str): joblib/pickle 모델 파일 경로.
+            model_path (str): joblib/pickle   .
 
         Raises:
-            FileNotFoundError: 모델 파일이 존재하지 않을 때.
-            ValueError: 모델 객체가 RandomForest 형식이 아닐 때.
+            FileNotFoundError:     .
+            ValueError:   RandomForest   .
         """
         self.model_path = Path(model_path)
         if not self.model_path.exists():
@@ -89,7 +89,7 @@ class RFPredictor(BaseModel):
         }
 
     def load(self, model_path: str) -> bool:
-        """모델을 파일에서 로드한다 (BaseModel 호환용)."""
+        """   (BaseModel )."""
         try:
             path = Path(model_path)
             if not path.exists():
@@ -110,17 +110,17 @@ class RFPredictor(BaseModel):
             return False
 
     def predict(self, feature_vector: np.ndarray) -> Dict[str, Any]:
-        """단일 샘플에 대해 독성 클래스를 예측한다.
+        """     .
 
         Args:
-            feature_vector (np.ndarray): (1, 10) shape의 특징 벡터.
+            feature_vector (np.ndarray): (1, 10) shape  .
 
         Returns:
-            Dict[str, Any]: 예측 결과와 확률, 메타데이터를 담은 딕셔너리.
+            Dict[str, Any]:   ,   .
 
         Raises:
-            ValueError: feature_vector의 차원 또는 길이가 잘못된 경우.
-            RuntimeError: 예측 중 알 수 없는 에러가 발생한 경우.
+            ValueError: feature_vector     .
+            RuntimeError:        .
         """
         features = self._validate_feature_vector(feature_vector)
         logger.info("RF prediction requested (shape=%s)", features.shape)

@@ -33,7 +33,7 @@ logger = logging.getLogger("SemanticTree")
 DTO = Namespace("http://www.drugtargetontology.org/dto/")
 
 # ---------------------------------------------------------
-# Step 1: 타겟 낚시 (Target Fishing / External Knowledge)
+# Step 1:   (Target Fishing / External Knowledge)
 # ---------------------------------------------------------
 class TargetFisher:
     def __init__(self, cache_path="target_cache.json"):
@@ -60,14 +60,14 @@ class TargetFisher:
 
     def get_target_name(self, smiles: str) -> str:
         """
-        SMILES에서 PubChem을 통해 유력한 타겟 이름 추론 (캐싱 적용).
+        SMILES PubChem      ( ).
         """
         if smiles in self.cache:
             # logger.info(f"Cache hit for SMILES: {smiles[:10]}...")
             return self.cache[smiles]
 
         try:
-            # 1. CID 검색
+            # 1. CID 
             compounds = pcp.get_compounds(smiles, namespace='smiles')
             if not compounds:
                 logger.warning(f"No compound found for SMILES: {smiles[:10]}...")
@@ -77,13 +77,13 @@ class TargetFisher:
             
             compound = compounds[0]
             
-            # API 호출 딜레이 (차단 방지)
+            # API   ( )
             time.sleep(1.0)
             
             synonyms = compound.synonyms
             candidate = "Unknown"
             if synonyms:
-                # 간단한 휴리스틱: 가장 짧은 이름이 보통 일반명
+                #  :     
                 candidate = min(synonyms, key=len)
             
             self.cache[smiles] = candidate
@@ -95,7 +95,7 @@ class TargetFisher:
             return "Unknown"
 
 # ---------------------------------------------------------
-# Step 2: 의미론적 속성 추출 (Semantic Feature Extraction)
+# Step 2:    (Semantic Feature Extraction)
 # ---------------------------------------------------------
 class DTOKnowledgeBase:
     def __init__(self, rdf_path: str):
@@ -113,7 +113,7 @@ class DTOKnowledgeBase:
 
     def get_semantic_info(self, target_name: str) -> Dict[str, str]:
         """
-        타겟 이름을 DTO 그래프와 매핑하여 계층 정보 추출.
+          DTO     .
         [Family] -> [Class] -> [Target]
         """
         info = {
@@ -127,8 +127,8 @@ class DTOKnowledgeBase:
         if not self.g:
             return info
 
-        # SPARQL 쿼리 예시 (실제 RDF 구조에 맞춰 조정 필요)
-        # 라벨(rdfs:label)이 target_name과 일치하거나 포함하는 노드 찾기
+        # SPARQL   ( RDF    )
+        # (rdfs:label) target_name    
         query = """
             SELECT ?s ?label ?parentLabel ?grandParentLabel
             WHERE {
@@ -148,14 +148,14 @@ class DTOKnowledgeBase:
             LIMIT 1
         """
         
-        # rdflib는 변수 바인딩을 initBindings로 처리
+        # rdflib   initBindings 
         try:
-            # target_name이 "BACE1"이라면 Literal로 변환
-            # rdflib 쿼리 실행
-            # 주의: DTO 구조가 복잡하므로 간단한 상위 클래스 탐색 로직 구현
+            # target_name "BACE1" Literal 
+            # rdflib  
+            # : DTO        
             
-            # 여기서는 데모를 위해 매핑이 안될 경우 Fallback 로직을 사용하거나
-            # 내부 매핑 테이블을 시뮬레이션 합니다. (실제 RDF 탐색은 구조 의존적)
+            #       Fallback  
+            #     . ( RDF   )
             
             # Simulation for demo purposes if RDF query is complex / empty in stub
             if "BACE1" in target_name.upper():
@@ -177,7 +177,7 @@ class DTOKnowledgeBase:
         except Exception as e:
             logger.error(f"SPARQL error: {e}")
 
-        # [추가] DTO 추출 실패 시 보정 로직 (Fallback)
+        # [] DTO      (Fallback)
         if info["Disease"] == "Unknown Disease" or info["Disease"] == "Unknown":
             t_upper = target_name.upper()
             if "COX-2" in t_upper or "CYCLOOXYGENASE" in t_upper:
@@ -192,7 +192,7 @@ class DTOKnowledgeBase:
         return info
 
 # ---------------------------------------------------------
-# Step 3: 시맨틱 의사결정 트리 구축 (Custom Semantic Tree)
+# Step 3:     (Custom Semantic Tree)
 # ---------------------------------------------------------
 class SemanticNode:
     def __init__(self, name: str, level: str, data: Any = None):
@@ -213,7 +213,7 @@ class SemanticDecisionTree:
 
     def insert(self, semantic_info: Dict[str, str]):
         """
-        [Family] -> [Class] -> [Target] 순서로 트리에 삽입
+        [Family] -> [Class] -> [Target]   
         """
         family = semantic_info.get("Family", "Unknown Family")
         p_class = semantic_info.get("Class", "Unknown Class")
@@ -238,7 +238,7 @@ class SemanticDecisionTree:
             node = self.root
             
         prefix = "  " * indent
-        symbol = "└─" if indent > 0 else ""
+        symbol = "" if indent > 0 else ""
         
         print(f"{prefix}{symbol} [{node.level}] {node.name}")
         
@@ -259,18 +259,18 @@ class SemanticDecisionTree:
         disease = semantic_info.get("Disease")
         toxicity = semantic_info.get("Toxicity")
         
-        explanation = f"이 약물({smiles[:10]}...)은 [{family}] 계열의 [{target}]에 작용하므로, "
+        explanation = f" ({smiles[:10]}...) [{family}]  [{target}] , "
         if disease and disease != "Unknown Disease":
-             explanation += f"[{disease}] 치료와 관련이 있습니다."
+             explanation += f"[{disease}]   ."
         else:
-             explanation += "특정 질환 정보가 불분명합니다."
+             explanation += "   ."
              
         if toxicity and toxicity != "None":
-            explanation += f" 단, [{toxicity}]의 독성 위험이 보고되었습니다."
+            explanation += f" , [{toxicity}]   ."
             
         return explanation
 
-    # [SemanticDecisionTree 클래스 내부에 추가]
+    # [SemanticDecisionTree   ]
     def export_graphviz(self, filename="semantic_tree_output"):
         try:
             from graphviz import Digraph
@@ -278,15 +278,15 @@ class SemanticDecisionTree:
             print("Graphviz not installed.")
             return
 
-        # 1. 핵심 설정: 위에서 아래로(TB), 직각 선(ortho)
+        # 1.  :  (TB),  (ortho)
         dot = Digraph(comment='SDT Structure', format='png')
-        dot.attr(rankdir='TB')      # Top-to-Bottom (공간 효율 최적화)
-        dot.attr(splines='ortho')   # 직각 선 (깔끔함)
-        dot.attr(nodesep='0.6')     # 노드 간격 확보
+        dot.attr(rankdir='TB')      # Top-to-Bottom (  )
+        dot.attr(splines='ortho')   #   ()
+        dot.attr(nodesep='0.6')     #   
         dot.attr('node', shape='box', style='filled,rounded', fontname='Segoe UI', fontsize='10')
         dot.attr('edge', penwidth='1.2', color='#2c3e50', arrowsize='0.7')
         
-        # 2. 색상 테마 정의 (신호등 시스템)
+        # 2.    ( )
         COLORS = {
             "Root": "#444444",      # Dark Grey
             "Family": "#5DADE2",    # Blue
@@ -305,12 +305,12 @@ class SemanticDecisionTree:
                 
             node_id = f"{node.level}_{node.name}_{id(node)}"
             
-            # 라벨 및 색상 로직
+            #    
             fill = COLORS.get(node.level, "white")
             font = FONT_COLORS.get(node.level, "black")
             label = node.name
             
-            # 리프 노드 상태에 따른 색상 분기
+            #      
             if node.level == "Leaf" and node.data:
                 d = node.data
                 is_pass = d.get('BBBP_Result') == "Pass"
@@ -318,7 +318,7 @@ class SemanticDecisionTree:
                 
                 if has_risk:
                     fill = COLORS["Leaf_Risk"]
-                    label += f"\n⚠️ {d['Toxicity']}"
+                    label += f"\n {d['Toxicity']}"
                 elif is_pass:
                     fill = COLORS["Leaf_Safe"]
                     label += "\n(Pass)"
@@ -352,21 +352,21 @@ class SemanticDecisionTree:
             print(f"Error rendering graph: {e}")
 
 # ---------------------------------------------------------
-# Step 4: 메인 실행 흐름
+# Step 4:   
 # ---------------------------------------------------------
 def main():
-    # 0. 설정
-    RDF_PATH = "data/ontology/dto.rdf" # 프로젝트 루트 기준 상대 경로
+    # 0. 
+    RDF_PATH = "data/ontology/dto.rdf" #     
     
-    # 예시 SMILES (BACE1 inhibitor, EGFR inhibitor, COX-2 inhibitor)
-    # 실제로는 복잡한 SMILES 사용
+    #  SMILES (BACE1 inhibitor, EGFR inhibitor, COX-2 inhibitor)
+    #   SMILES 
     sample_smiles = [
         ("CC1=CC(=C(C(=C1)C)C)C2=C(C=C(C=C2)S(=O)(=O)N)O", "Rofecoxib (COX-2)"), 
         ("CS(=O)(=O)CC1=CC=C(C=C1)C2=C(C(=NO2)C3=CC=CC=C3Cl)C4=CC=C(C=C4)F", "Etoricoxib (COX-2)"),
         ("COCC1=C(C=C(C(=C1)C#CC2=CC=CC=C2N)C)CN(C)C", "Dummy EGFR-like"), 
     ]
     
-    # 1. 초기화
+    # 1. 
     try:
         fisher = TargetFisher()
     except ImportError:
@@ -388,7 +388,7 @@ def main():
         
         # Step 1: Target Fishing
         if fisher:
-            # 실제 호출 잠시 주석처리 (데모용 Mocking)
+            #     ( Mocking)
             # target_name = fisher.get_target_name(smiles)
             # Demo Override
             if "COX-2" in label:
@@ -431,7 +431,7 @@ def main():
     print("=== Final Semantic Decision Tree ===\n")
     tree.print_tree()
     
-    # [추가] 그래프 시각화 파일 내보내기
+    # []    
     tree.export_graphviz("semantic_tree_output")
 
 if __name__ == "__main__":

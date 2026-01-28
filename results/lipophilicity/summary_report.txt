@@ -1,105 +1,105 @@
 Summary Report for lipophilicity
 ========================================
  [Root] Root
-  └─ [Family] Unknown Family
-    └─ [Class] Unknown Class
-      └─ [Leaf] BDBM71863
+   [Family] Unknown Family
+     [Class] Unknown Class
+       [Leaf] BDBM71863
           => Inference: Acts on BDBM71863 (Unknown Family). Unknown Disease related, Value: 3.54.
-      └─ [Leaf] BDBM50365069
+       [Leaf] BDBM50365069
           => Inference: Acts on BDBM50365069 (Unknown Family). Unknown Disease related, Value: -1.18.
-      └─ [Leaf] CGE
+       [Leaf] CGE
           => Inference: Acts on CGE (Unknown Family). Unknown Disease related, Value: 3.69.
-      └─ [Leaf] GPi 688
+       [Leaf] GPi 688
           => Inference: Acts on GPi 688 (Unknown Family). Unknown Disease related, Value: 3.37.
-      └─ [Leaf] PD129540
+       [Leaf] PD129540
           => Inference: Acts on PD129540 (Unknown Family). Unknown Disease related, Value: 3.10.
-      └─ [Leaf] GTPL3095
+       [Leaf] GTPL3095
           => Inference: Acts on GTPL3095 (Unknown Family). Unknown Disease related, Value: 3.14.
-      └─ [Leaf] BDBM50365093
+       [Leaf] BDBM50365093
           => Inference: Acts on BDBM50365093 (Unknown Family). Unknown Disease related, Value: -0.72.
-      └─ [Leaf] BDBM50383804
+       [Leaf] BDBM50383804
           => Inference: Acts on BDBM50383804 (Unknown Family). Unknown Disease related, Value: 0.34.
-      └─ [Leaf] F79815
+       [Leaf] F79815
           => Inference: Acts on F79815 (Unknown Family). Unknown Disease related, Value: 3.05.
-      └─ [Leaf] STK833208
+       [Leaf] STK833208
           => Inference: Acts on STK833208 (Unknown Family). Unknown Disease related, Value: 2.25.
-      └─ [Leaf] BDBM50026721
+       [Leaf] BDBM50026721
           => Inference: Acts on BDBM50026721 (Unknown Family). Unknown Disease related, Value: 1.51.
-      └─ [Leaf] CHEMBL578201
+       [Leaf] CHEMBL578201
           => Inference: Acts on CHEMBL578201 (Unknown Family). Unknown Disease related, Value: 2.61.
-      └─ [Leaf] PA 6
+       [Leaf] PA 6
           => Inference: Acts on PA 6 (Unknown Family). Unknown Disease related, Value: -0.08.
-      └─ [Leaf] BDBM50392225
+       [Leaf] BDBM50392225
           => Inference: Acts on BDBM50392225 (Unknown Family). Unknown Disease related, Value: 1.95.
-      └─ [Leaf] BDBM50419375
+       [Leaf] BDBM50419375
           => Inference: Acts on BDBM50419375 (Unknown Family). Unknown Disease related, Value: 1.34.
-      └─ [Leaf] G62737
+       [Leaf] G62737
           => Inference: Acts on G62737 (Unknown Family). Unknown Disease related, Value: 3.20.
-      └─ [Leaf] BDBM50397117
+       [Leaf] BDBM50397117
           => Inference: Acts on BDBM50397117 (Unknown Family). Unknown Disease related, Value: 1.60.
-      └─ [Leaf] TM906
+       [Leaf] TM906
           => Inference: Acts on TM906 (Unknown Family). Unknown Disease related, Value: 3.77.
-      └─ [Leaf] CHEMBL469790
+       [Leaf] CHEMBL469790
           => Inference: Acts on CHEMBL469790 (Unknown Family). Unknown Disease related, Value: 3.15.
-      └─ [Leaf] BDBM50395407
+       [Leaf] BDBM50395407
           => Inference: Acts on BDBM50395407 (Unknown Family). Unknown Disease related, Value: 0.32.
-      └─ [Leaf] CHEMBL322479
+       [Leaf] CHEMBL322479
           => Inference: Acts on CHEMBL322479 (Unknown Family). Unknown Disease related, Value: 2.92.
-      └─ [Leaf] BDBM50385431
+       [Leaf] BDBM50385431
           => Inference: Acts on BDBM50385431 (Unknown Family). Unknown Disease related, Value: 1.92.
-      └─ [Leaf] CHEMBL2179291
+       [Leaf] CHEMBL2179291
           => Inference: Acts on CHEMBL2179291 (Unknown Family). Unknown Disease related, Value: 3.17.
-      └─ [Leaf] DB-330704
+       [Leaf] DB-330704
           => Inference: Acts on DB-330704 (Unknown Family). Unknown Disease related, Value: 2.17.
-      └─ [Leaf] A1LX4
+       [Leaf] A1LX4
           => Inference: Acts on A1LX4 (Unknown Family). Unknown Disease related, Value: 1.20.
-      └─ [Leaf] BDBM50331969
+       [Leaf] BDBM50331969
           => Inference: Acts on BDBM50331969 (Unknown Family). Unknown Disease related, Value: 3.93.
-      └─ [Leaf] 3J-313S
+       [Leaf] 3J-313S
           => Inference: Acts on 3J-313S (Unknown Family). Unknown Disease related, Value: 1.90.
-      └─ [Leaf] CHEMBL528217
+       [Leaf] CHEMBL528217
           => Inference: Acts on CHEMBL528217 (Unknown Family). Unknown Disease related, Value: 2.27.
-      └─ [Leaf] BDBM50399347
+       [Leaf] BDBM50399347
           => Inference: Acts on BDBM50399347 (Unknown Family). Unknown Disease related, Value: 1.20.
-      └─ [Leaf] CHEMBL475386
+       [Leaf] CHEMBL475386
           => Inference: Acts on CHEMBL475386 (Unknown Family). Unknown Disease related, Value: 1.14.
-      └─ [Leaf] BDBM50427327
+       [Leaf] BDBM50427327
           => Inference: Acts on BDBM50427327 (Unknown Family). Unknown Disease related, Value: 2.60.
-      └─ [Leaf] BDBM50379167
+       [Leaf] BDBM50379167
           => Inference: Acts on BDBM50379167 (Unknown Family). Unknown Disease related, Value: 3.30.
-      └─ [Leaf] CIDR
+       [Leaf] CIDR
           => Inference: Acts on CIDR (Unknown Family). Unknown Disease related, Value: 3.94.
-      └─ [Leaf] BDBM50402811
+       [Leaf] BDBM50402811
           => Inference: Acts on BDBM50402811 (Unknown Family). Unknown Disease related, Value: 2.34.
-      └─ [Leaf] BDBM50418818
+       [Leaf] BDBM50418818
           => Inference: Acts on BDBM50418818 (Unknown Family). Unknown Disease related, Value: 2.57.
-      └─ [Leaf] HMS2477C18
+       [Leaf] HMS2477C18
           => Inference: Acts on HMS2477C18 (Unknown Family). Unknown Disease related, Value: 3.62.
-      └─ [Leaf] BDBM50384396
+       [Leaf] BDBM50384396
           => Inference: Acts on BDBM50384396 (Unknown Family). Unknown Disease related, Value: 2.06.
-      └─ [Leaf] BDBM50421059
+       [Leaf] BDBM50421059
           => Inference: Acts on BDBM50421059 (Unknown Family). Unknown Disease related, Value: 4.33.
-      └─ [Leaf] RXV
+       [Leaf] RXV
           => Inference: Acts on RXV (Unknown Family). Unknown Disease related, Value: 2.55.
-      └─ [Leaf] CHEMBL339051
+       [Leaf] CHEMBL339051
           => Inference: Acts on CHEMBL339051 (Unknown Family). Unknown Disease related, Value: 2.78.
-      └─ [Leaf] 192461-58-8
+       [Leaf] 192461-58-8
           => Inference: Acts on 192461-58-8 (Unknown Family). Unknown Disease related, Value: 1.40.
-      └─ [Leaf] s5490
+       [Leaf] s5490
           => Inference: Acts on s5490 (Unknown Family). Unknown Disease related, Value: -0.54.
-      └─ [Leaf] ST083772
+       [Leaf] ST083772
           => Inference: Acts on ST083772 (Unknown Family). Unknown Disease related, Value: 2.91.
-      └─ [Leaf] BDBM50344982
+       [Leaf] BDBM50344982
           => Inference: Acts on BDBM50344982 (Unknown Family). Unknown Disease related, Value: -0.40.
-      └─ [Leaf] BDBM50344996
+       [Leaf] BDBM50344996
           => Inference: Acts on BDBM50344996 (Unknown Family). Unknown Disease related, Value: -0.16.
-      └─ [Leaf] 4tv3
+       [Leaf] 4tv3
           => Inference: Acts on 4tv3 (Unknown Family). Unknown Disease related, Value: 2.20.
-      └─ [Leaf] BDBM64723
+       [Leaf] BDBM64723
           => Inference: Acts on BDBM64723 (Unknown Family). Unknown Disease related, Value: 3.40.
-      └─ [Leaf] ANW
+       [Leaf] ANW
           => Inference: Acts on ANW (Unknown Family). Unknown Disease related, Value: 1.10.
-      └─ [Leaf] BDBM50418942
+       [Leaf] BDBM50418942
           => Inference: Acts on BDBM50418942 (Unknown Family). Unknown Disease related, Value: 2.28.
-      └─ [Leaf] STK842630
+       [Leaf] STK842630
           => Inference: Acts on STK842630 (Unknown Family). Unknown Disease related, Value: 3.47.

@@ -1,11 +1,11 @@
-"""PyTorch 기반 RandomForest 구현.
+"""PyTorch  RandomForest .
 
-scikit-learn RandomForest를 PyTorch로 재구현.
-GNN은 사용하지 않고, PyTorch Decision Tree Ensemble만 사용.
+scikit-learn RandomForest PyTorch .
+GNN  , PyTorch Decision Tree Ensemble .
 
-Phase 1.3: PyTorch 기반 RF 구현
-- 기존 sklearn RF와 동일한 인터페이스 유지
-- 앙상블 시스템과 호환성 확보
+Phase 1.3: PyTorch  RF 
+-  sklearn RF   
+-    
 
 Author: DTO-DSS Team
 Date: 2026-01-20
@@ -22,10 +22,10 @@ logger = logging.getLogger(__name__)
 
 
 class PyTorchDecisionTree(nn.Module):
-    """PyTorch Decision Tree 구현.
+    """PyTorch Decision Tree .
 
-    RandomForest는 여러 Decision Tree의 앙상블이므로,
-    먼저 단일 Decision Tree를 구현합니다.
+    RandomForest  Decision Tree ,
+      Decision Tree .
     """
 
     def __init__(self, max_features: int = 10, max_depth: int = 10):
@@ -34,7 +34,7 @@ class PyTorchDecisionTree(nn.Module):
         self.max_depth = max_depth
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        # Feature selection (랜덤)
+        # Feature selection ()
         self.feature_indices = torch.tensor(
             np.random.choice(max_features, size=int(np.sqrt(max_features)), replace=False)
         ).long()
@@ -50,37 +50,37 @@ class PyTorchDecisionTree(nn.Module):
         """
         batch_size, num_features = x.shape
 
-        # 각 feature에 대한 기준값 (랜덤 학습 후 학습됨)
-        # 현재는 단순 가중치로 초기화
+        #  feature   (   )
+        #    
         if not hasattr(self, 'feature_thresholds'):
-            # 학습 단계에서 학습되는 임계값들
+            #    
             self.feature_thresholds = torch.zeros(len(self.feature_indices), device=self.device)
             self.feature_weights = torch.rand(len(self.feature_indices), device=self.device)
 
-        # 선택된 feature들로 예측 (가중합)
+        #  feature  ()
         selected_features = x[:, self.feature_indices]
 
-        # 가중합 계산
-        # feature_weights는 [-1, 1] 범위의 랜덤 가중치
-        # feature_thresholds는 학습된 임계값들
+        #  
+        # feature_weights [-1, 1]   
+        # feature_thresholds  
         weighted_sum = torch.sum(
             (selected_features - self.feature_thresholds) * self.feature_weights.view(1, -1),
             dim=1,
             keepdim=True
         ).squeeze()
 
-        # Sigmoid로 확률로 변환
+        # Sigmoid  
         probability = torch.sigmoid(weighted_sum)
 
-        # [safe_prob, toxic_prob] 형태로 반환
+        # [safe_prob, toxic_prob]  
         return torch.stack([1 - probability, probability], dim=1)
 
 
 class MolecularPyTorchRF(nn.Module):
-    """PyTorch 기반 RandomForest 모델.
+    """PyTorch  RandomForest .
 
-    여러 Decision Tree를 결합한 앙상블 모델.
-    Bootstrapping과 Random Feature Selection 사용.
+     Decision Tree   .
+    Bootstrapping Random Feature Selection .
     """
 
     def __init__(
@@ -97,7 +97,7 @@ class MolecularPyTorchRF(nn.Module):
         self.num_classes = num_classes
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        # Decision Tree 앙상블 생성
+        # Decision Tree  
         self.trees = nn.ModuleList([
             PyTorchDecisionTree(max_features=max_features, max_depth=max_depth)
             for _ in range(num_trees)
@@ -113,7 +113,7 @@ class MolecularPyTorchRF(nn.Module):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Forward pass - 모든 트리 예측을 평균.
+        """Forward pass -    .
 
         Args:
             x: Input features [batch_size, num_features]
@@ -121,7 +121,7 @@ class MolecularPyTorchRF(nn.Module):
         Returns:
             Ensemble prediction [batch_size, 2]
         """
-        # 각 트리 예측 수집
+        #    
         tree_predictions = []
         for i, tree in enumerate(self.trees):
             pred = tree(x)
@@ -130,14 +130,14 @@ class MolecularPyTorchRF(nn.Module):
         # [batch_size, num_trees, 2]
         stacked_predictions = torch.stack(tree_predictions, dim=1)
 
-        # 앙상블: 모든 트리 예측 평균
-        # 가중평균이 아닌 단순 평균 (기존 sklearn RF와 동일)
+        # :    
+        #     ( sklearn RF )
         ensemble_pred = torch.mean(stacked_predictions, dim=1)
 
         return ensemble_pred
 
     def predict_proba(self, x: torch.Tensor) -> torch.Tensor:
-        """확률 예측.
+        """ .
 
         Returns:
             Probabilities [batch_size, num_classes]
@@ -146,7 +146,7 @@ class MolecularPyTorchRF(nn.Module):
             return self.forward(x)
 
     def predict(self, x: torch.Tensor) -> torch.Tensor:
-        """클래스 예측.
+        """ .
 
         Returns:
             Class indices [batch_size]
@@ -155,21 +155,21 @@ class MolecularPyTorchRF(nn.Module):
         return torch.argmax(proba, dim=1)
 
     def fit(self, X_train: np.ndarray, y_train: np.ndarray, epochs: int = 100):
-        """모델 학습 (데모 버전).
+        """  ( ).
 
-        실제 사용 시에는 pre-trained 모델을 로드하여 사용하는 것을 권장.
-        이 fit 메서드는 개념 증명용 데모 구현입니다.
+           pre-trained     .
+         fit     .
         """
         logger.warning("Fit called - PyTorch RF should use pre-trained models for production")
         logger.info("Using simple random initialization for demo purposes")
 
-        # numpy to tensor 변환
+        # numpy to tensor 
         X_tensor = torch.FloatTensor(X_train).to(self.device)
         y_tensor = torch.LongTensor(y_train).to(self.device)
 
-        # 단순 학습 데모 (기존 학습된 모델 사용 권장)
+        #    (    )
         with torch.no_grad():
-            # 모든 tree들의 feature weights를 랜덤 초기화
+            #  tree feature weights  
             for tree in self.trees:
                 tree.feature_weights = torch.rand(len(tree.feature_indices), device=self.device)
                 tree.feature_thresholds = torch.zeros(len(tree.feature_indices), device=self.device)
@@ -178,7 +178,7 @@ class MolecularPyTorchRF(nn.Module):
         return {'loss': [0.5], 'accuracy': [0.7]}  # Mock return
 
     def save_model(self, path: str):
-        """모델 저장."""
+        """ ."""
         torch.save({
             'model_state_dict': self.state_dict(),
             'config': {
@@ -191,7 +191,7 @@ class MolecularPyTorchRF(nn.Module):
         logger.info(f"Model saved to {path}")
 
     def load_model(self, path: str):
-        """모델 로드."""
+        """ ."""
         checkpoint = torch.load(path, map_location=self.device)
         self.load_state_dict(checkpoint['model_state_dict'])
 
@@ -203,7 +203,7 @@ class MolecularPyTorchRF(nn.Module):
         logger.info(f"Model loaded from {path}")
 
     def get_feature_importance(self) -> Dict[str, float]:
-        """Feature importance 계산 (랜덤 추정).
+        """Feature importance  ( ).
 
         Returns:
             Feature names and importance scores
@@ -214,20 +214,20 @@ class MolecularPyTorchRF(nn.Module):
             'Heavy_Atom_Count', 'logP'
         ]
 
-        # 현재는 랜덤 가중치로 추정
-        # 실제 Feature Importance는 permutation importance 등으로 계산 필요
-        # 여기서는 균등 분배 (임시 구현)
+        #    
+        #  Feature Importance permutation importance   
+        #    ( )
         importances = {name: 1.0 / len(feature_names) for name in feature_names}
 
         return importances
 
 
-# ==================== 호환성 레이어 ====================
+# ====================   ====================
 
 class RFPredictorCompat:
-    """기존 RFPredictor와 호환되는 인터페이스.
+    """ RFPredictor  .
 
-    PyTorch RF를 기존 앙상블 시스템에 통합하기 위한 레이어.
+    PyTorch RF      .
     """
 
     def __init__(self, model: MolecularPyTorchRF):
@@ -235,7 +235,7 @@ class RFPredictorCompat:
         self.device = model.device
 
     def predict(self, feature_vector: np.ndarray) -> Dict[str, Any]:
-        """기존 RFPredictor.predict()와 동일한 형태로 예측.
+        """ RFPredictor.predict()   .
 
         Returns:
             {
@@ -245,18 +245,18 @@ class RFPredictorCompat:
                 'class_name': str ('Safe' or 'Toxic'),
                 'confidence': float (0-1),
                 'probabilities': dict (0: Safe_prob, 1: Toxic_prob),
-                'chemical_id': str (입력값)
+                'chemical_id': str ()
             }
         """
         # numpy to tensor
         x_tensor = torch.FloatTensor(feature_vector).to(self.device)
 
-        # 예측
+        # 
         with torch.no_grad():
             proba = self.model.predict_proba(x_tensor)
             pred_class = torch.argmax(proba, dim=1)
 
-        # 결과 추출
+        #  
         safe_prob = proba[0, 0].cpu().numpy()[0]
         toxic_prob = proba[0, 1].cpu().numpy()[0]
         confidence = max(safe_prob, toxic_prob)
@@ -274,7 +274,7 @@ class RFPredictorCompat:
         }
 
 
-# ==================== 테스트 코드 ====================
+# ====================   ====================
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -283,14 +283,14 @@ if __name__ == "__main__":
     print("Testing PyTorch Random Forest")
     print("=" * 60)
 
-    # Mock 학습 데이터
+    # Mock  
     np.random.seed(42)
     X_train = np.random.randn(100, 10)  # 100 samples, 10 features
     y_train = np.random.randint(0, 2, 100)  # 0=Safe, 1=Toxic
 
-    # 모델 생성
+    #  
     model = MolecularPyTorchRF(
-        num_trees=50,      # 테스트용 작은 모델
+        num_trees=50,      #   
         max_features=10,
         max_depth=5,
         num_classes=2
@@ -298,11 +298,11 @@ if __name__ == "__main__":
 
     print(f"Model created with {sum(p.numel() for p in model.parameters())} parameters")
 
-    # 학습 (짧게 테스트)
+    #  ( )
     print("\nStarting training (20 epochs)...")
     history = model.fit(X_train, y_train, epochs=20)
 
-    # 테스트 예측
+    #  
     print("\nTesting predictions...")
     X_test = np.random.randn(5, 10)
 
@@ -315,10 +315,10 @@ if __name__ == "__main__":
         toxic_p = proba[i, 1].cpu().numpy()
         print(f"  Sample {i}: Safe={safe_p:.4f}, Toxic={toxic_p:.4f}")
 
-    # 호환성 레이어 테스트
+    #   
     print("\nTesting compatibility layer...")
     compat = RFPredictorCompat(model)
-    result = compat.predict(X_test[0:1])  # 첫 샘플
+    result = compat.predict(X_test[0:1])  #  
     print(f"\nCompatibility test result:")
     print(f"  Model: {result['model']}")
     print(f"  Prediction: {result['class_name']}")

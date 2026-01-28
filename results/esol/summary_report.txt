@@ -1,105 +1,105 @@
 Summary Report for esol
 ========================================
  [Root] Root
-  └─ [Family] Unknown Family
-    └─ [Class] Unknown Class
-      └─ [Leaf] LS-14805
+   [Family] Unknown Family
+     [Class] Unknown Class
+       [Leaf] LS-14805
           => Inference: Acts on LS-14805 (Unknown Family). Unknown Disease related, Value: -0.97.
-      └─ [Leaf] C18833
+       [Leaf] C18833
           => Inference: Acts on C18833 (Unknown Family). Unknown Disease related, Value: -2.88.
-      └─ [Leaf] D0762
+       [Leaf] D0762
           => Inference: Acts on D0762 (Unknown Family). Unknown Disease related, Value: -2.58.
-      └─ [Leaf] P1893
+       [Leaf] P1893
           => Inference: Acts on P1893 (Unknown Family). Unknown Disease related, Value: -6.62.
-      └─ [Leaf] CP34
+       [Leaf] CP34
           => Inference: Acts on CP34 (Unknown Family). Unknown Disease related, Value: -2.23.
-      └─ [Leaf] BT
+       [Leaf] BT
           => Inference: Acts on BT (Unknown Family). Unknown Disease related, Value: -2.73.
-      └─ [Leaf] H59636
+       [Leaf] H59636
           => Inference: Acts on H59636 (Unknown Family). Unknown Disease related, Value: -6.54.
-      └─ [Leaf] L024123
+       [Leaf] L024123
           => Inference: Acts on L024123 (Unknown Family). Unknown Disease related, Value: -4.14.
-      └─ [Leaf] NSC8935
+       [Leaf] NSC8935
           => Inference: Acts on NSC8935 (Unknown Family). Unknown Disease related, Value: -4.53.
-      └─ [Leaf] NP139
+       [Leaf] NP139
           => Inference: Acts on NP139 (Unknown Family). Unknown Disease related, Value: -5.25.
-      └─ [Leaf] 2-P
+       [Leaf] 2-P
           => Inference: Acts on 2-P (Unknown Family). Unknown Disease related, Value: 0.24.
-      └─ [Leaf] PCN 2
+       [Leaf] PCN 2
           => Inference: Acts on PCN 2 (Unknown Family). Unknown Disease related, Value: -4.06.
-      └─ [Leaf] P0316
+       [Leaf] P0316
           => Inference: Acts on P0316 (Unknown Family). Unknown Disease related, Value: -2.01.
-      └─ [Leaf] Cyral
+       [Leaf] Cyral
           => Inference: Acts on Cyral (Unknown Family). Unknown Disease related, Value: -1.90.
-      └─ [Leaf] T0079
+       [Leaf] T0079
           => Inference: Acts on T0079 (Unknown Family). Unknown Disease related, Value: -5.45.
-      └─ [Leaf] UN2356
+       [Leaf] UN2356
           => Inference: Acts on UN2356 (Unknown Family). Unknown Disease related, Value: -1.58.
-      └─ [Leaf] M0175
+       [Leaf] M0175
           => Inference: Acts on M0175 (Unknown Family). Unknown Disease related, Value: -1.03.
-      └─ [Leaf] B0082
+       [Leaf] B0082
           => Inference: Acts on B0082 (Unknown Family). Unknown Disease related, Value: -2.03.
-      └─ [Leaf] Dicid
+       [Leaf] Dicid
           => Inference: Acts on Dicid (Unknown Family). Unknown Disease related, Value: -3.99.
-      └─ [Leaf] s9453
+       [Leaf] s9453
           => Inference: Acts on s9453 (Unknown Family). Unknown Disease related, Value: -3.10.
-      └─ [Leaf] PCB91
+       [Leaf] PCB91
           => Inference: Acts on PCB91 (Unknown Family). Unknown Disease related, Value: -6.63.
-      └─ [Leaf] Vizor
+       [Leaf] Vizor
           => Inference: Acts on Vizor (Unknown Family). Unknown Disease related, Value: -3.35.
-      └─ [Leaf] Timet
+       [Leaf] Timet
           => Inference: Acts on Timet (Unknown Family). Unknown Disease related, Value: -3.75.
-      └─ [Leaf] N4E
+       [Leaf] N4E
           => Inference: Acts on N4E (Unknown Family). Unknown Disease related, Value: -2.34.
-      └─ [Leaf] Cobex
+       [Leaf] Cobex
           => Inference: Acts on Cobex (Unknown Family). Unknown Disease related, Value: -4.48.
-      └─ [Leaf] H0033
+       [Leaf] H0033
           => Inference: Acts on H0033 (Unknown Family). Unknown Disease related, Value: -1.75.
-      └─ [Leaf] 4eoh
+       [Leaf] 4eoh
           => Inference: Acts on 4eoh (Unknown Family). Unknown Disease related, Value: -1.45.
-      └─ [Leaf] Neonal
+       [Leaf] Neonal
           => Inference: Acts on Neonal (Unknown Family). Unknown Disease related, Value: -1.97.
-      └─ [Leaf] DDE
+       [Leaf] DDE
           => Inference: Acts on DDE (Unknown Family). Unknown Disease related, Value: -6.55.
-      └─ [Leaf] O0033
+       [Leaf] O0033
           => Inference: Acts on O0033 (Unknown Family). Unknown Disease related, Value: -2.61.
-      └─ [Leaf] D0479
+       [Leaf] D0479
           => Inference: Acts on D0479 (Unknown Family). Unknown Disease related, Value: -3.63.
-      └─ [Leaf] St-100
+       [Leaf] St-100
           => Inference: Acts on St-100 (Unknown Family). Unknown Disease related, Value: -4.37.
-      └─ [Leaf] Gusto
+       [Leaf] Gusto
           => Inference: Acts on Gusto (Unknown Family). Unknown Disease related, Value: -4.23.
-      └─ [Leaf] VDC
+       [Leaf] VDC
           => Inference: Acts on VDC (Unknown Family). Unknown Disease related, Value: -1.94.
-      └─ [Leaf] F649166
+       [Leaf] F649166
           => Inference: Acts on F649166 (Unknown Family). Unknown Disease related, Value: -4.48.
-      └─ [Leaf] PTL
+       [Leaf] PTL
           => Inference: Acts on PTL (Unknown Family). Unknown Disease related, Value: -1.10.
-      └─ [Leaf] Ph2NH
+       [Leaf] Ph2NH
           => Inference: Acts on Ph2NH (Unknown Family). Unknown Disease related, Value: -3.86.
-      └─ [Leaf] Panocon
+       [Leaf] Panocon
           => Inference: Acts on Panocon (Unknown Family). Unknown Disease related, Value: -3.30.
-      └─ [Leaf] Rilof
+       [Leaf] Rilof
           => Inference: Acts on Rilof (Unknown Family). Unknown Disease related, Value: -4.64.
-      └─ [Leaf] I0320
+       [Leaf] I0320
           => Inference: Acts on I0320 (Unknown Family). Unknown Disease related, Value: -3.90.
-      └─ [Leaf] PCB 2
+       [Leaf] PCB 2
           => Inference: Acts on PCB 2 (Unknown Family). Unknown Disease related, Value: -4.68.
-      └─ [Leaf] P1243
+       [Leaf] P1243
           => Inference: Acts on P1243 (Unknown Family). Unknown Disease related, Value: -0.79.
-      └─ [Leaf] 6128-03-6
+       [Leaf] 6128-03-6
           => Inference: Acts on 6128-03-6 (Unknown Family). Unknown Disease related, Value: -0.53.
-      └─ [Leaf] M0321
+       [Leaf] M0321
           => Inference: Acts on M0321 (Unknown Family). Unknown Disease related, Value: -2.78.
-      └─ [Leaf] F0056
+       [Leaf] F0056
           => Inference: Acts on F0056 (Unknown Family). Unknown Disease related, Value: -0.68.
-      └─ [Leaf] H0034
+       [Leaf] H0034
           => Inference: Acts on H0034 (Unknown Family). Unknown Disease related, Value: -1.68.
-      └─ [Leaf] IJX
+       [Leaf] IJX
           => Inference: Acts on IJX (Unknown Family). Unknown Disease related, Value: -3.01.
-      └─ [Leaf] BAS 2430
+       [Leaf] BAS 2430
           => Inference: Acts on BAS 2430 (Unknown Family). Unknown Disease related, Value: -3.00.
-      └─ [Leaf] Orix
+       [Leaf] Orix
           => Inference: Acts on Orix (Unknown Family). Unknown Disease related, Value: -4.25.
-      └─ [Leaf] I11455
+       [Leaf] I11455
           => Inference: Acts on I11455 (Unknown Family). Unknown Disease related, Value: -3.34.

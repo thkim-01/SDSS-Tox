@@ -134,13 +134,13 @@ def summarize(tree: TreePayload) -> Dict[str, str]:
 # ---------------------------
 st.set_page_config(page_title="SDT Dashboard", layout="wide")
 st.title("Semantic Decision Tree (Live)")
-st.caption("백엔드 /analysis/sdt-tree 연동")
+st.caption(" /analysis/sdt-tree ")
 
 with st.sidebar:
-    st.subheader("입력")
+    st.subheader("")
     api_url = st.text_input("API URL", value=DEFAULT_API)
-    smiles = st.text_input("SMILES (선택)")
-    refresh = st.button("새로고침")
+    smiles = st.text_input("SMILES ()")
+    refresh = st.button("")
 
 if refresh:
     st.experimental_rerun()
@@ -152,17 +152,17 @@ try:
     stats = summarize(tree)
 
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("총 노드", stats["total_nodes"])
-    c2.metric("리프", stats["leaf_nodes"])
+    c1.metric(" ", stats["total_nodes"])
+    c2.metric("", stats["leaf_nodes"])
     c3.metric("Active Path", stats["active_len"])
     c4.metric("Active Leaf", stats["active_leaf"])
 
     st.graphviz_chart(dot, use_container_width=True)
 
-    with st.expander("경로/설명", expanded=True):
-        active_display = tree.active_path if tree.active_path else "없음"
+    with st.expander("/", expanded=True):
+        active_display = tree.active_path if tree.active_path else ""
         st.write(f"Active path: {active_display}")
 except Exception as exc:  # noqa: BLE001
-    status.error(f"트리를 불러오지 못했습니다: {exc}")
-    if st.button("다시 시도"):
+    status.error(f"  : {exc}")
+    if st.button(" "):
         st.experimental_rerun()
